@@ -1,0 +1,2 @@
+module PageFoldersHelper
+end
