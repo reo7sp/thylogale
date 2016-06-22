@@ -1,0 +1,21 @@
+<%= form_for(@page_folder) do |f| %>
+  <% if @page_folder.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@page_folder.errors.count, "error") %> prohibited this page_folder from being saved:</h2>
+
+      <ul>
+      <% @page_folder.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :path %><br>
+    <%= f.text_field :path %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
