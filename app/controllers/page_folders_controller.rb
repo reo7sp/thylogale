@@ -1,10 +1,11 @@
 class PageFoldersController < ApplicationController
-  before_action :set_page_folder, only: [:show, :edit, :update, :destroy]
+  before_action :set_page_folder, only: [:show, :search, :update, :destroy]
 
   # GET /page_folders
   # GET /page_folders.json
   def index
-    @page_folders = PageFolder.all
+    @page_folder = PageFolder.find(1)
+    render :show
   end
 
   # GET /page_folders/1
@@ -12,13 +13,10 @@ class PageFoldersController < ApplicationController
   def show
   end
 
-  # GET /page_folders/new
-  def new
-    @page_folder = PageFolder.new
-  end
-
-  # GET /page_folders/1/edit
-  def edit
+  # GET /page_folders/1/search
+  def search
+    # TODO
+    render json: []
   end
 
   # POST /page_folders
@@ -26,28 +24,20 @@ class PageFoldersController < ApplicationController
   def create
     @page_folder = PageFolder.new(page_folder_params)
 
-    respond_to do |format|
-      if @page_folder.save
-        format.html { redirect_to @page_folder, notice: 'Page folder was successfully created.' }
-        format.json { render :show, status: :created, location: @page_folder }
-      else
-        format.html { render :new }
-        format.json { render json: @page_folder.errors, status: :unprocessable_entity }
-      end
+    if @page_folder.save
+      render json: @page_folder, status: :created
+    else
+      render json: @page_folder.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /page_folders/1
   # PATCH/PUT /page_folders/1.json
   def update
-    respond_to do |format|
-      if @page_folder.update(page_folder_params)
-        format.html { redirect_to @page_folder, notice: 'Page folder was successfully updated.' }
-        format.json { render :show, status: :ok, location: @page_folder }
-      else
-        format.html { render :edit }
-        format.json { render json: @page_folder.errors, status: :unprocessable_entity }
-      end
+    if @page_folder.update(page_folder_params)
+      render json: @page_folder, status: :ok
+    else
+      render json: @page_folder.errors, status: :unprocessable_entity
     end
   end
 
@@ -55,10 +45,7 @@ class PageFoldersController < ApplicationController
   # DELETE /page_folders/1.json
   def destroy
     @page_folder.destroy
-    respond_to do |format|
-      format.html { redirect_to page_folders_url, notice: 'Page folder was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    head :ok
   end
 
   private
@@ -69,6 +56,6 @@ class PageFoldersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def page_folder_params
-      params.require(:page_folder).permit(:path)
+      params.require(:page_folder).permit(:title, :name, :root_folder_id)
     end
 end

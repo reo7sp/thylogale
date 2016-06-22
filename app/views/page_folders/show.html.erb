@@ -1,9 +1,33 @@
+<div class="page-folders-topbar">
+  <% unless @page_folder.root_folder.nil? %>
+      <%= link_to glyphicon('chevron-left'), @page_folder.root_folder, class: 'page-folders-topbar__back-btn' %>
+  <% end %>
+  <p class="page-folders-topbar__title"><%= @page_folder.title %></p>
+</div>
+
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Path:</strong>
-  <%= @page_folder.path %>
-</p>
+<table class="page-folders-list">
+  <% @page_folder.subfolders.each do |folder| %>
+      <tr class="page-folders-list__row">
+        <td class="page-folders-list__icon"><%= glyphicon('folder-open') %></td>
+        <td class="page-folders-list__title"><%= folder.title %></td>
+        <td class="page-folders-list__name"><%= folder.name %></td>
+      </tr>
+  <% end %>
 
-<%= link_to 'Edit', edit_page_folder_path(@page_folder) %> |
-<%= link_to 'Back', page_folders_path %>
+  <% @page_folder.pages.each do |page| %>
+      <tr class="page-folders-list__row">
+        <td class="page-folders-list__icon"><%= glyphicon('file') %></td>
+        <td class="page-folders-list__title"><%= page.title %></td>
+        <td class="page-folders-list__name"><%= page.name %></td>
+      </tr>
+  <% end %>
+
+  <% if @page_folder.subfolders.empty? && @page_folder.pages.empty? %>
+      <tr class="page-folders-list__row">
+        <td class="page-folders-list__icon"><%= glyphicon('remove') %></td>
+        <td class="page-folders-list__title"><%=t :no_files %></td>
+      </tr>
+  <% end %>
+</table>

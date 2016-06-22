@@ -1,24 +1,8 @@
+<div class="page-topbar">
+  <%= link_to glyphicon('chevron-left'), @page.root_folder, class: 'page-topbar__back-btn' %>
+  <p class="page-topbar__title"><%= @page_folder.title %></p>
+</div>
+
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @page.title %>
-</p>
-
-<p>
-  <strong>Slug:</strong>
-  <%= @page.slug %>
-</p>
-
-<p>
-  <strong>Template:</strong>
-  <%= @page.template %>
-</p>
-
-<p>
-  <strong>Page folder:</strong>
-  <%= @page.page_folder %>
-</p>
-
-<%= link_to 'Edit', edit_page_path(@page) %> |
-<%= link_to 'Back', pages_path %>
+<%# TODO %>

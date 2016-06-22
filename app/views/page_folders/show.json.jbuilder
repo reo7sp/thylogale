@@ -1,1 +1,1 @@
-json.extract! @page_folder, :id, :path, :created_at, :updated_at
+json.extract! @page_folder, :id, :title, :name, :root_folder, :subdirectories, :pages, :created_at, :updated_at
