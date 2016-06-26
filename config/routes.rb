@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  root to: 'page_folders#index'
+  root to: 'main#index'
+
+  match '/setup', to: 'first_setups#setup', via: :get
+  match '/setup', to: 'first_setups#init', via: :post, as: :init
 
   resources :page_folders, except: [:edit, :new] do
     resources :pages, except: [:index, :edit, :new], shallow: true do

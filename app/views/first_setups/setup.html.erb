@@ -1,0 +1,154 @@
+<% content_for(:title, t(:first_setup)) %>
+
+<div class="first-setup-window">
+  <h1><%=t :hello_exclmark %></h1>
+  <br>
+
+  <%= form_for @first_setup, url: init_path do |f| %>
+      <h4><%=t :import_from %></h4>
+
+      <div class="first-setup-window__choice">
+        <div class="form-group radio">
+          <label>
+            <%= f.radio_button :import_choice, 'new', checked: true %>
+            <%=t :import_from_nothing_create_new %>
+          </label>
+        </div>
+        <div class="form-group radio">
+          <label>
+            <%= f.radio_button :import_choice, 'upload' %>
+            <%=t :import_from_your_computer %>
+          </label>
+        </div>
+      </div>
+
+      <div class="first-setup-window__choice-details">
+        <%# upload %>
+        <div class="panel panel-default hidden" id="first_setup_import_choice_upload_details">
+          <div class="panel-body">
+            <%= f.label :save_s3_access_key, t(:choose_zip_archive), class: 'control-label' %>
+            <%= f.file_field :import_file, class: 'form-control' %>
+          </div>
+        </div>
+        <%# new %>
+      </div>
+
+      <br>
+
+      <h4><%=t :save_on %></h4>
+
+      <div class="first-setup-window__choice">
+        <div class="form-group radio">
+          <label>
+            <%= f.radio_button :save_choice, 'local', checked: true %>
+            <%=t :save_on_server %>
+          </label>
+        </div>
+        <div class="form-group radio">
+          <label>
+            <%= f.radio_button :save_choice, 's3' %>
+            <%=t :save_on_amazon_s3 %>
+          </label>
+        </div>
+      </div>
+
+      <div class="first-setup-window__choice-details">
+        <%# local %>
+        <%# s3 %>
+        <div class="form-horizontal panel panel-default hidden" id="first_setup_save_choice_s3_details">
+          <div class="panel-body">
+            <div class="form-group">
+              <%= f.label :save_s3_access_key, 'Access key', class: 'control-label col-sm-3' %>
+              <div class="col-sm-9">
+                <%= f.text_field :save_s3_access_key, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :save_s3_secret, 'Secret', class: 'control-label col-sm-3' %>
+              <div class="col-sm-9">
+                <%= f.text_field :save_s3_secret, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :save_s3_region, 'Region', class: 'control-label col-sm-3' %>
+              <div class="col-sm-9">
+                <%= f.text_field :save_s3_region, class: 'form-control' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <h4><%=t :send_email_from %></h4>
+
+      <div class="first-setup-window__choice">
+        <div class="form-group radio">
+          <label>
+            <%= f.radio_button :email_choice, 'local', checked: true %>
+            <%=t :email_from_server %>
+            <%=t :email_from_server_desc %>
+          </label>
+        </div>
+        <div class="form-group radio">
+          <label>
+            <%= f.radio_button :email_choice, 'mailgun' %>
+            <%=t :email_from_mailgun %>
+          </label>
+        </div>
+      </div>
+
+      <div class="first-setup-window__choice-details">
+        <%# local %>
+        <%# mailgun %>
+        <div class="form-horizontal panel panel-default hidden" id="first_setup_email_choice_mailgun_details">
+          <div class="panel-body">
+            <div class="form-group">
+              <%= f.label :email_mailgun_api_key, 'API key', class: 'control-label col-sm-3' %>
+              <div class="col-sm-9">
+                <%= f.text_field :email_mailgun_api_key, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :email_mailgun_domain, 'Domain', class: 'control-label col-sm-3' %>
+              <div class="col-sm-9">
+                <%= f.text_field :email_mailgun_domain, class: 'form-control' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <h4><%=t :admin_user %></h4>
+
+      <div class="first-setup-window__choice">
+        <div class="form-horizontal" id="first_setup_save_choice_s3_details">
+          <div class="form-group">
+            <label class="control-label col-sm-4"><%=t :user %></label>
+            <div class="col-sm-8">
+              <p class="form-control-static">admin</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label :admin_password, t(:password), class: 'control-label col-sm-4' %>
+            <div class="col-sm-8">
+              <%= f.text_field :admin_password, class: 'form-control' %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label :admin_email, t(:recovery_email), class: 'control-label col-sm-4' %>
+            <div class="col-sm-8">
+              <%= f.text_field :admin_email, class: 'form-control' %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <%= f.submit t(:finish_setup), class: 'btn btn-success', id: 'first_setup_finish_btn', data_turbolinks: false, disabled: true %>
+  <% end %>
+</div>
