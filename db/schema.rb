@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160626221425) do
+ActiveRecord::Schema.define(version: 20160627094242) do
 
   create_table "first_setups", force: :cascade do |t|
     t.boolean  "done"
@@ -22,23 +22,24 @@ ActiveRecord::Schema.define(version: 20160626221425) do
     t.string   "save_s3_access_key"
     t.string   "save_s3_secret"
     t.string   "save_s3_region"
-    t.string   "save_s3_bucket"
     t.string   "admin_password"
     t.string   "admin_email"
     t.string   "email_choice"
     t.string   "email_mailgun_api_key"
     t.string   "email_mailgun_domain"
+    t.string   "save_local_dir"
   end
 
   create_table "page_folders", force: :cascade do |t|
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.integer  "pages_count"
     t.integer  "root_folder_id"
     t.string   "name"
     t.string   "title"
     t.string   "path"
     t.string   "container"
+    t.integer  "subdirectories_count"
   end
 
   add_index "page_folders", ["root_folder_id"], name: "index_page_folders_on_root_folder_id"

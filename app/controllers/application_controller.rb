@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   private
 
   def set_first_setup
-    @first_setup = FirstSetup.first
+    @first_setup = FirstSetup.instance
   end
 
   def check_setup

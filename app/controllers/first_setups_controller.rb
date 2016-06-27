@@ -7,6 +7,8 @@ class FirstSetupsController < ApplicationController
   def init
     update_params = first_setup_params.to_h
     update_params[:done] = true
+    update_params[:site_domain] = ENV['SITE_DOMAIN']
+    update_params[:save_local_dir] = File.join(Locations.sites_default, ENV['SITE_DOMAIN'])
     update_params.delete(:import_file)
     @first_setup.update(update_params)
 
