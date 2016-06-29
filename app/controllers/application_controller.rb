@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :set_first_setup
-  before_action :check_setup
+  before_action :check_setup, if: "request.path != setup_path"
 
   private
 
@@ -13,11 +13,6 @@ class ApplicationController < ActionController::Base
   end
 
   def check_setup
-    case params[:controller]
-      when FirstSetupsController.controller_name
-        redirect_to page_folders_path if @first_setup.done
-      else
-        redirect_to setup_path unless @first_setup.done
-    end
+    redirect_to setup_path unless @first_setup.done
   end
 end

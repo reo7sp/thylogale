@@ -11,23 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160627094242) do
+ActiveRecord::Schema.define(version: 20160628224459) do
 
   create_table "first_setups", force: :cascade do |t|
-    t.boolean  "done"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.boolean  "done",                  default: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.string   "import_choice"
     t.string   "save_choice"
     t.string   "save_s3_access_key"
     t.string   "save_s3_secret"
     t.string   "save_s3_region"
-    t.string   "admin_password"
-    t.string   "admin_email"
     t.string   "email_choice"
     t.string   "email_mailgun_api_key"
     t.string   "email_mailgun_domain"
     t.string   "save_local_dir"
+    t.string   "site_domain"
   end
 
   create_table "page_folders", force: :cascade do |t|
@@ -58,9 +57,11 @@ ActiveRecord::Schema.define(version: 20160627094242) do
   add_index "pages", ["root_folder_id"], name: "index_pages_on_root_folder_id"
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "password"
+    t.string   "name"
+    t.string   "email"
+    t.string   "password_digest"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
 end
