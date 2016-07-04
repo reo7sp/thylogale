@@ -1,7 +1,9 @@
 class FirstSetup < ActiveRecord::Base
-  before_create :confirm_singularity
-
   after_initialize :initialize_s3, if: "save_choice == 's3'"
+
+  validate on: :create do
+    errors.add(:only_one_instance, 'is allowed') if FirstSetup.count > 0
+  end
 
   validates_presence_of :done, on: :update
 
@@ -13,18 +15,10 @@ class FirstSetup < ActiveRecord::Base
   validates_presence_of :email_mailgun_api_key, :email_mailgun_domain, if: "email_choice == 'mailgun'"
 
   def self.instance
-    if any?
-      first
-    else
-      create!
-    end
+    first_or_create!
   end
 
   private
-
-  def confirm_singularity
-    raise 'Only one first setup is allowed' if FirstSetup.any?
-  end
 
   def initialize_s3
     Aws.config.update({
