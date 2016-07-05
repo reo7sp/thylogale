@@ -22,6 +22,8 @@ gem 'autoprefixer-rails'
 gem 'jquery-rails'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'turbolinks'
+gem 'react-rails'
+gem 'i18n-js', '>= 3.0.0.rc11'
 
 group :development, :test do
   gem 'byebug'

@@ -1,33 +1,43 @@
+<% cache @page_folder do %>
+
 <div class="page-folders-topbar">
-  <% unless @page_folder.root_folder.nil? %>
-      <%= link_to glyphicon('chevron-left'), @page_folder.root_folder, class: 'page-folders-topbar__back-btn' %>
-  <% end %>
-  <p class="page-folders-topbar__title"><%= @page_folder.title %></p>
+  <%= link_to glyphicon('chevron-left'), @page_folder.root_folder, class: 'page-folders-topbar__back-btn' if @page_folder.root_folder_id? %>
+  <h1 class="page-folders-topbar__title"><%= @page_folder.title %></h1>
+
+  <div class="page-folders-topbar__actions page-folders-actions">
+    <div class="page-folders-actions__item">
+      <%= react_component 'CreatePageButton', root_folder_id: @page_folder.id %>
+    </div>
+    <div class="page-folders-actions__item">
+      <%= react_component 'CreatePageFolderButton', root_folder_id: @page_folder.id %>
+    </div>
+  </div>
 </div>
 
-<p id="notice"><%= notice %></p>
+<% if @page_folder.subfolders.any? && @page_folder.pages.any? %>
+    <%= react_component 'PageSearchBox', root_folder_id: @page_folder.id %>
 
-<table class="page-folders-list">
-  <% @page_folder.subfolders.each do |folder| %>
-      <tr class="page-folders-list__row">
-        <td class="page-folders-list__icon"><%= glyphicon('folder-open') %></td>
-        <td class="page-folders-list__title"><%= folder.title %></td>
-        <td class="page-folders-list__name"><%= folder.name %></td>
-      </tr>
-  <% end %>
+    <table class="page-folders-list">
+      <% @page_folder.subfolders.each do |folder| %>
+          <tr class="page-folders-list__row">
+            <td class="page-folders-list__icon"><%= glyphicon('folder-open') %></td>
+            <td class="page-folders-list__title"><%= folder.title %></td>
+            <td class="page-folders-list__name"><%= folder.name %></td>
+            <td class="page-folders-list__time"><%= folder.updated_on.to_s(:short) %></td>
+          </tr>
+      <% end %>
 
-  <% @page_folder.pages.each do |page| %>
-      <tr class="page-folders-list__row">
-        <td class="page-folders-list__icon"><%= glyphicon('file') %></td>
-        <td class="page-folders-list__title"><%= page.title %></td>
-        <td class="page-folders-list__name"><%= page.name %></td>
-      </tr>
-  <% end %>
+      <% @page_folder.pages.each do |page| %>
+          <tr class="page-folders-list__row">
+            <td class="page-folders-list__icon"><%= glyphicon('file') %></td>
+            <td class="page-folders-list__title"><%= page.title %></td>
+            <td class="page-folders-list__name"><%= page.name %></td>
+            <td class="page-folders-list__time"><%= page.updated_on.to_s(:short) %></td>
+          </tr>
+      <% end %>
+    </table>
+<% else %>
+    <div class="page-folders-no-files"><%=t :no_files %></div>
+<% end %>
 
-  <% if @page_folder.subfolders.empty? && @page_folder.pages.empty? %>
-      <tr class="page-folders-list__row">
-        <td class="page-folders-list__icon"><%= glyphicon('remove') %></td>
-        <td class="page-folders-list__title"><%=t :no_files %></td>
-      </tr>
-  <% end %>
-</table>
+<% end %>

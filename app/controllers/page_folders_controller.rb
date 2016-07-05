@@ -4,7 +4,7 @@ class PageFoldersController < ApplicationController
   # GET /page_folders
   # GET /page_folders.json
   def index
-    @page_folder = PageFolder.find(1)
+    @page_folder = PageFolder.root
     render :show
   end
 

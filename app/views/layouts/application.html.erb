@@ -9,6 +9,10 @@
 </head>
 <body data-controller="<%= params[:controller] %>">
 
+<% flash.each do |k, v| %>
+  <div class="flash flash_<%= k %>"><%= v %></div>
+<% end %>
+
 <%= yield %>
 
 </body>

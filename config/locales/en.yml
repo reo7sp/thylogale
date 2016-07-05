@@ -43,3 +43,8 @@ en:
   error: "Error"
   no_env_site_domain: "SITE_DOMAIN environment variable isn't set"
   password_confirmation: "Password confirmation"
+  finishing: "Finishing"
+  new_page: "New page"
+  enter_new_page: "Enter new page name"
+  new_folder: "New folder"
+  enter_new_folder: "Enter new folder name"

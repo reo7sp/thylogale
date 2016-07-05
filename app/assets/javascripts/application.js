@@ -14,4 +14,8 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap-sprockets
+//= require i18n/translations
+//= require react
+//= require react_ujs
+//= require components
 //= require_tree .
