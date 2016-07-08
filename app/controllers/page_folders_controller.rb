@@ -4,8 +4,7 @@ class PageFoldersController < ApplicationController
   # GET /page_folders
   # GET /page_folders.json
   def index
-    @page_folder = PageFolder.root
-    render :show
+    redirect_to PageFolder.root
   end
 
   # GET /page_folders/1
@@ -23,9 +22,11 @@ class PageFoldersController < ApplicationController
   # POST /page_folders.json
   def create
     @page_folder = PageFolder.new(page_folder_params)
+    @page_folder.root_folder ||= PageFolder.find(params[:page_folder_id])
+    @page_folder.path = File.join(@page_folder.root_folder.path, @page_folder.name)
 
     if @page_folder.save
-      render json: @page_folder, status: :created
+      head :created
     else
       render json: @page_folder.errors, status: :unprocessable_entity
     end
@@ -35,7 +36,7 @@ class PageFoldersController < ApplicationController
   # PATCH/PUT /page_folders/1.json
   def update
     if @page_folder.update(page_folder_params)
-      render json: @page_folder, status: :ok
+      head :ok
     else
       render json: @page_folder.errors, status: :unprocessable_entity
     end
@@ -49,13 +50,14 @@ class PageFoldersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_page_folder
-      @page_folder = PageFolder.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def page_folder_params
-      params.require(:page_folder).permit(:title, :name, :root_folder_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_page_folder
+    @page_folder = PageFolder.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def page_folder_params
+    params.require(:page_folder).permit(:title, :name, :root_folder_id)
+  end
 end

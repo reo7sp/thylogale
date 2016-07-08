@@ -14,6 +14,9 @@ class FirstSetup < ActiveRecord::Base
 
   validates_presence_of :email_mailgun_api_key, :email_mailgun_domain, if: "email_choice == 'mailgun'"
 
+  attr_accessor :import_choice
+  attr_accessor :import_file
+
   def self.instance
     first_or_create!
   end

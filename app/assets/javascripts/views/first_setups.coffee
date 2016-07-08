@@ -1,7 +1,3 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
-
 import_choices_ids = ['#first_setup_import_choice_new', '#first_setup_import_choice_upload']
 save_choices_ids = ['#first_setup_save_choice_local', '#first_setup_save_choice_s3']
 email_choices_ids = ['#first_setup_email_choice_local', '#first_setup_email_choice_mailgun']
@@ -51,13 +47,11 @@ check_form = ->
 
   $('#first_setup_finish_btn').attr('disabled', !ok)
   
-  return
-  
 init = ->
   for ids in [import_choices_ids, save_choices_ids, email_choices_ids]
     for id in ids
       do (id, ids) ->
-        $(document.body).on 'change', id, (e) ->
+        $(id).on 'change', (e) ->
           for id2 in ids
             if id2 == id
               $("#{id2}_details").removeClass('hidden')
@@ -65,13 +59,10 @@ init = ->
               $("#{id2}_details").addClass('hidden')
               
           check_form()
-          
-          return
 
   for id in controls_ids
-    $(document.body).on 'input change', id, (e) ->
+    $(id).on 'input change', (e) ->
       check_form()
-      return
 
   return
   

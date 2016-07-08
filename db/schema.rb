@@ -11,13 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160628224459) do
+ActiveRecord::Schema.define(version: 20160707194933) do
 
   create_table "first_setups", force: :cascade do |t|
     t.boolean  "done",                  default: false
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
-    t.string   "import_choice"
     t.string   "save_choice"
     t.string   "save_s3_access_key"
     t.string   "save_s3_secret"
@@ -30,15 +29,14 @@ ActiveRecord::Schema.define(version: 20160628224459) do
   end
 
   create_table "page_folders", force: :cascade do |t|
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.integer  "pages_count"
     t.integer  "root_folder_id"
     t.string   "name"
     t.string   "title"
     t.string   "path"
-    t.string   "container"
-    t.integer  "subdirectories_count"
+    t.integer  "subfolders_count"
   end
 
   add_index "page_folders", ["root_folder_id"], name: "index_page_folders_on_root_folder_id"
@@ -51,7 +49,6 @@ ActiveRecord::Schema.define(version: 20160628224459) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.string   "path"
-    t.string   "container"
   end
 
   add_index "pages", ["root_folder_id"], name: "index_pages_on_root_folder_id"

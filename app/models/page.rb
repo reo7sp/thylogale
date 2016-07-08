@@ -11,12 +11,12 @@ class Page < ActiveRecord::Base
 
   def container_service
     if @container_service.nil?
-      case container
+      setup = FirstSetup.instance
+      case setup.save_choice
         when 'local'
-          @container_service = LocalPageContainer.new(self, FirstSetup.instance)
-
+          @container_service = LocalPageContainer.new(self, setup)
         when 's3'
-          @container_service = S3PageContainer.new(self, FirstSetup.instance)
+          @container_service = S3PageContainer.new(self, setup)
       end
     end
     @container_service

@@ -32,7 +32,11 @@ class FirstSetupsController < ApplicationController
   end
 
   def first_setup_params
-    params.require(:first_setup).permit(:import_choice, :save_choice, :import_file, :save_s3_access_key, :save_s3_secret, :save_s3_region, :email_choice, :email_mailgun_api_key, :email_mailgun_domain)
+    params.require(:first_setup).permit(
+        :import_choice, :import_file,
+        :save_choice, :save_s3_access_key, :save_s3_secret, :save_s3_region,
+        :email_choice, :email_mailgun_api_key, :email_mailgun_domain
+    )
   end
 
   def admin_user_setup_params
@@ -40,26 +44,20 @@ class FirstSetupsController < ApplicationController
   end
 
   def save_setup
-    update_params = first_setup_params.to_h
-    update_params[:done] = true
-    update_params[:site_domain] = ENV['SITE_DOMAIN']
-    update_params[:save_local_dir] = File.join(Locations.sites_default, ENV['SITE_DOMAIN'])
-    update_params.delete(:import_file)
-    @first_setup.update!(update_params)
+    additional_params = {
+        done: true,
+        site_domain: ENV['SITE_DOMAIN'],
+        save_local_dir: File.join(Locations.sites_default, ENV['SITE_DOMAIN'])
+    }
+    @first_setup.update!(first_setup_params.merge(additional_params))
   end
 
   def create_admin_user
-    User.create!(admin_user_setup_params.to_h.merge(id: 1, name: 'admin'))
+    User.create!(admin_user_setup_params.merge(id: 1, name: 'admin'))
   end
 
   def create_site_container
-    case @first_setup.save_choice
-      when 'local'
-        PageFolder.create!(id: 1, name: '/', title: t(:site), path: '/', container: 'local')
-
-      when 's3'
-        PageFolder.create!(id: 1, name: '/', title: t(:site), path: '/', container: 's3')
-    end
+    PageFolder.create!(id: 1, name: '/', title: t(:site), path: '/')
   end
 
   def import_site
@@ -68,15 +66,8 @@ class FirstSetupsController < ApplicationController
         # TODO: create welcome page
 
       when 'upload'
-        zip_file = Tempfile.new('first_setup_site')
-        begin
-          zip_file.write(first_setup_params[:import_file])
-          zip_file.close
-          Zip::File.open(zip_file.path) do |zip|
-            # TODO: import files
-          end
-        ensure
-          zip_file.close!
+        Zip::File.open(first_setup_params[:import_file]) do |zip|
+          # TODO: import files
         end
     end
   end

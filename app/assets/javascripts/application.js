@@ -15,7 +15,10 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require i18n/translations
-//= require react
-//= require react_ujs
-//= require components
+//= require lodash
+
+//= require extensions
+
 //= require_tree .
+
+//= require_self

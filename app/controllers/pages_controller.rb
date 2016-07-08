@@ -20,9 +20,11 @@ class PagesController < ApplicationController
   # POST /page_folders/1/pages.json
   def create
     @page = Page.new(page_params)
+    @page.root_folder ||= PageFolder.find(params[:page_folder_id])
+    @page.path = File.join(@page.root_folder.path, @page.name)
 
     if @page.save
-      render json: @page, status: :ok
+      head :created
     else
       render json: @page.errors, status: :unprocessable_entity
     end
@@ -32,7 +34,7 @@ class PagesController < ApplicationController
   # PATCH/PUT /pages/1.json
   def update
     if @page.update(page_params)
-      render json: @page, status: :ok
+      head :ok
     else
       render json: @page.errors, status: :unprocessable_entity
     end
@@ -46,13 +48,14 @@ class PagesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_page
-      @page = Page.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def page_params
-      params.require(:page).permit(:title, :name, :template, :root_folder_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_page
+    @page = Page.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def page_params
+    params.require(:page).permit(:title, :name, :template, :root_folder_id)
+  end
 end

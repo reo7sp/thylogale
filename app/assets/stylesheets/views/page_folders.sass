@@ -6,9 +6,12 @@
     margin: 0
 
   &__back-btn
-    color: #333
-    font-size: 28px
+    margin-left: 16px
+    color: #ddd
     text-decoration: none
+
+    &:hover
+      text-decoration: none
 
   &__actions
     display: inline-block
@@ -17,9 +20,19 @@
 
 .page-folders-list
   font-size: larger
+  width: 100%
 
-.page-folders-no-files
-  font-size: larger
+  &__icon
+    width: 32px
+
+    &_folder
+      color: #fccf17
+
+    &_file
+      color: #bbbbbb
+
+  &__updated-at
+    text-align: right
 
 .page-folders-actions
   &__item
