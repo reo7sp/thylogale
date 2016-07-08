@@ -4,7 +4,8 @@ class PageFolder < ActiveRecord::Base
   belongs_to :root_folder, class_name: 'PageFolder', touch: true, counter_cache: 'subfolders_count'
 
   validates_presence_of :name
-  validates_format_of :name, with: /\A^[^\s~#%&*{}\\:<>?\/+|"]+\z/
+  validates_format_of :name, with: /\A^[^\s~#%&*{}\\:<>?\/+|"]+\z/, unless: :is_root?
+  validates_length_of :name, minimum: 1
   validates_presence_of :root_folder, unless: :is_root?
   validates_presence_of :path
 

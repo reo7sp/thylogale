@@ -19,7 +19,6 @@ class PageFoldersController < ApplicationController
   end
 
   # POST /page_folders
-  # POST /page_folders.json
   def create
     @page_folder = PageFolder.new(page_folder_params)
     @page_folder.root_folder ||= PageFolder.find(params[:page_folder_id])
@@ -33,7 +32,6 @@ class PageFoldersController < ApplicationController
   end
 
   # PATCH/PUT /page_folders/1
-  # PATCH/PUT /page_folders/1.json
   def update
     if @page_folder.update(page_folder_params)
       head :ok
@@ -43,7 +41,6 @@ class PageFoldersController < ApplicationController
   end
 
   # DELETE /page_folders/1
-  # DELETE /page_folders/1.json
   def destroy
     @page_folder.destroy
     head :ok

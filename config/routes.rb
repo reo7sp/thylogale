@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root to: 'main#index'
+  root to: redirect('/page_folders')
 
   match '/setup', to: 'first_setups#setup', via: :get
   match '/setup', to: 'first_setups#init', via: [:post, :put, :patch], as: :init

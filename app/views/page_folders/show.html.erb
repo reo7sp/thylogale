@@ -36,7 +36,7 @@
               </tr>
           <% end %>
 
-          <% if @page_folder.subfolders.empty? && @page_folder.pages.empty? %>
+          <% if @page_folder.subfolders.empty? and @page_folder.pages.empty? %>
               <tr class="page-folders-list__row">
                 <td class="page-folders-list__title"><%=t :no_files %></td>
               </tr>
