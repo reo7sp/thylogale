@@ -47,6 +47,10 @@ GEM
     aws-sdk-resources (2.3.16)
       aws-sdk-core (= 2.3.16)
     bcrypt (3.1.11)
+    better_errors (2.1.1)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+      rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     bootstrap-sass (3.3.6)
@@ -54,6 +58,7 @@ GEM
       sass (>= 3.3.4)
     builder (3.2.2)
     byebug (9.0.5)
+    callsite (0.0.11)
     capybara (2.7.1)
       addressable
       mime-types (>= 1.16)
@@ -61,9 +66,8 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    capybara-webkit (1.11.1)
-      capybara (>= 2.3.0, < 2.8.0)
-      json
+    cliver (0.3.2)
+    coderay (1.1.1)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.1.x)
@@ -76,6 +80,7 @@ GEM
     diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (2.7.0)
+    git-version-bump (0.15.1)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     i18n (0.7.0)
@@ -104,6 +109,10 @@ GEM
       actionmailer (>= 3.2.13)
       json (>= 1.7.7)
       rest-client (>= 1.6.7)
+    meta_request (0.4.0)
+      callsite (~> 0.0, >= 0.0.11)
+      rack-contrib (~> 1.1)
+      railties (>= 3.0.0, < 5.1.0)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
@@ -116,7 +125,14 @@ GEM
       pkg-config (~> 1.1.7)
     pg (0.18.4)
     pkg-config (1.1.7)
+    poltergeist (1.10.0)
+      capybara (~> 2.1)
+      cliver (~> 0.3.1)
+      websocket-driver (>= 0.2.0)
     rack (1.6.4)
+    rack-contrib (1.4.0)
+      git-version-bump (~> 0.15)
+      rack (~> 1.4)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.6)
@@ -199,6 +215,9 @@ GEM
       binding_of_caller (>= 0.7.2)
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
+    websocket-driver (0.6.4)
+      websocket-extensions (>= 0.1.0)
+    websocket-extensions (0.1.2)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -209,10 +228,11 @@ DEPENDENCIES
   autoprefixer-rails
   aws-sdk
   bcrypt (~> 3.1.7)
+  better_errors
+  binding_of_caller
   bootstrap-sass (~> 3.3.6)
   byebug
   capybara
-  capybara-webkit
   coffee-rails (~> 4.1.0)
   i18n-js (>= 3.0.0.rc11)
   jbuilder (~> 2.0)
@@ -220,8 +240,10 @@ DEPENDENCIES
   launchy
   lodash-rails
   mailgun_rails
+  meta_request
   mysql2
   pg
+  poltergeist
   rails (= 4.2.6)
   rspec-rails (~> 3.4)
   rubyzip (>= 1.0.0)

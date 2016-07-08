@@ -1,47 +1,9 @@
 <div class="container">
   <% cache @page_folder.id do %>
-      <div class="page-folders-topbar">
-        <h1 class="page-folders-topbar__title"><%= @page_folder.title %></h1>
-
-        <%= link_to "#{glyphicon 'arrow-up'} #{t :go_up}".html_safe, @page_folder.root_folder, class: 'page-folders-topbar__back-btn' if @page_folder.root_folder_id? %>
-
-        <div class="page-folders-topbar__actions page-folders-actions">
-          <button class="page-folders-actions__item btn btn-primary" id="create-page-button" data-in-folder="<%= @page_folder.id %>">
-            <%= glyphicon 'plus'%> <%=t :new_page %>
-          </button>
-
-          <button class="page-folders-actions__item btn btn-default" id="create-page-folder-button" data-in-folder="<%= @page_folder.id %>">
-            <%=t :new_folder %>
-          </button>
-        </div>
-      </div>
+      <%= render 'topbar' %>
   <% end %>
 
   <% cache @page_folder do %>
-      <div class="table-responsive">
-        <table class="table table-hover page-folders-list">
-          <% @page_folder.subfolders.each do |folder| %>
-              <tr class="page-folders-list__row" onclick="Turbolinks.visit('<%= page_folder_path folder %>');">
-                <td class="page-folders-list__icon page-folders-list__icon_folder"><%= glyphicon 'folder-open' %></td>
-                <td class="page-folders-list__title"><%= folder.title %></td>
-                <td class="page-folders-list__updated-at"><%= folder.updated_at.to_s(:short) %></td>
-              </tr>
-          <% end %>
-
-          <% @page_folder.pages.each do |page| %>
-              <tr class="page-folders-list__row" onclick="Turbolinks.visit('<%= page_path page %>');">
-                <td class="page-folders-list__icon page-folders-list__icon_file"><%= glyphicon 'file' %></td>
-                <td class="page-folders-list__title"><%= page.title %></td>
-                <td class="page-folders-list__updated-at"><%= page.updated_at.to_s(:short) %></td>
-              </tr>
-          <% end %>
-
-          <% if @page_folder.subfolders.empty? and @page_folder.pages.empty? %>
-              <tr class="page-folders-list__row">
-                <td class="page-folders-list__title"><%=t :no_files %></td>
-              </tr>
-          <% end %>
-        </table>
-      </div>
+      <%= render 'contents' %>
   <% end %>
 </div>

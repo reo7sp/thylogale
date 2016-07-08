@@ -7,7 +7,7 @@ class FirstSetup < ActiveRecord::Base
 
   validates_presence_of :done, on: :update
 
-  validates_presence_of :site_domain, :import_choice, :save_choice, :email_choice, if: :done
+  validates_presence_of :site_domain, :save_choice, :email_choice, if: :done
 
   validates_presence_of :save_local_dir, if: "save_choice == 'local'"
   validates_presence_of :save_s3_access_key, :save_s3_secret, :save_s3_region, if: "save_choice == 's3'"

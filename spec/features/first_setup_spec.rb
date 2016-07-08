@@ -11,6 +11,7 @@ RSpec.describe 'first setup', type: :feature do
     end
 
     visit '/'
+    expect(page.status_code).to be 200
     expect(page).to have_current_path(setup_path)
 
     expect_finish_disabled

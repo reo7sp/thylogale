@@ -1,0 +1,27 @@
+<h4><%=t :import_from %></h4>
+
+<div class="first-setup-window__choice">
+  <div class="form-group radio">
+    <label>
+      <%= f.radio_button :import_choice, 'new', checked: true %>
+      <%=t :import_from_nothing_create_new %>
+    </label>
+  </div>
+  <div class="form-group radio">
+    <label>
+      <%= f.radio_button :import_choice, 'upload' %>
+      <%=t :import_from_your_computer %>
+    </label>
+  </div>
+</div>
+
+<div class="first-setup-window__choice-details">
+  <%# upload %>
+  <div class="panel panel-default hidden" id="first_setup_import_choice_upload_details">
+    <div class="panel-body">
+      <%= f.label :import_file, t(:choose_zip_archive), class: 'control-label' %>
+      <%= f.file_field :import_file, class: 'form-control' %>
+    </div>
+  </div>
+  <%# new %>
+</div>
