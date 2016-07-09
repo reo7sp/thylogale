@@ -11,7 +11,7 @@ RSpec.describe FirstSetup, type: :model do
     expect(FirstSetup.instance.done).to be false
   end
 
-  describe '#instance' do
+  describe '.instance' do
     it 'creates new instance if none exists' do
       expect { FirstSetup.instance }.to change { FirstSetup.count }.from(0).to(1)
     end

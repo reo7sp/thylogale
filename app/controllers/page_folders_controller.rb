@@ -21,7 +21,7 @@ class PageFoldersController < ApplicationController
   # POST /page_folders
   def create
     @page_folder = PageFolder.new(page_folder_params)
-    @page_folder.root_folder ||= PageFolder.find(params[:page_folder_id])
+    @page_folder.root_folder ||= PageFolder.find(params[:id])
     @page_folder.path = File.join(@page_folder.root_folder.path, @page_folder.name)
 
     if @page_folder.save

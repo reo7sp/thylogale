@@ -27,10 +27,15 @@ gem 'lodash-rails'
 
 group :development, :test do
   gem 'byebug'
+
   gem 'rspec-rails', '~> 3.4'
+  gem 'factory_girl_rails', '~> 4.0'
+  gem 'database_cleaner'
+
   gem 'capybara'
   gem 'poltergeist'
   gem 'launchy'
+
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request'
