@@ -19,7 +19,9 @@ class PagesController < ApplicationController
   # POST /page_folders/1/pages
   def create
     @page = Page.new(page_params)
-    @page.root_folder ||= PageFolder.find(params[:page_folder_id])
+    @page.title.strip!
+    @page.name ||= @page.title.parameterize
+    @page.root_folder ||= PageFolder.find_by(id: params[:page_folder_id])
     @page.path = File.join(@page.root_folder.path, @page.name)
 
     if @page.save

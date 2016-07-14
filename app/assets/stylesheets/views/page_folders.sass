@@ -22,17 +22,57 @@
   font-size: larger
   width: 100%
 
+  &__row
+    cursor: pointer
+
+    td
+      vertical-align: middle !important
+
+    &:hover
+      .page-folders-list__title
+        &_folder
+          font-size: 1.2em
+
+        &_page
+          font-size: 1.4em
+
+      .page-folders-list__action
+        opacity: 1
+
   &__icon
     width: 32px
 
     &_folder
       color: #fccf17
 
-    &_file
-      color: #bbbbbb
+    &_page
+      font-size: 1.7em
+      color: #fa6c68
+
+  &__actions
+    text-align: right
+    width: 64px
+
+  &__title
+    transition: font-size 0.25s ease
+
+    &_page
+      font-size: 1.1em
+
+  &__action
+    display: table-cell
+    color: #333
+    opacity: 0
+    padding-left: 8px
+    transition: opacity 0.25s ease
+
+    &:hover
+      color: #23527c
+      cursor: pointer
 
   &__updated-at
     text-align: right
+    width: 128px
 
 .page-folders-actions
   &__item

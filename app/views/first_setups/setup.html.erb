@@ -11,6 +11,10 @@
           <br>
       <% end %>
 
-      <%= f.submit t(:finish_setup), class: 'btn btn-success', id: 'first_setup_finish_btn', disabled: true, data_turbolinks: false, data_disable_with: t(:finishing) %>
+      <%= f.submit t(:finish_setup),
+                   class: 'btn btn-success', id: 'first_setup_finish_btn',
+                   disabled: true,
+                   'data-turbolinks' => false, 'data-disable-with' => t(:finishing)
+      %>
   <% end %>
 </div>

@@ -18,10 +18,12 @@ class PageFoldersController < ApplicationController
     render json: []
   end
 
-  # POST /page_folders
+  # POST /page_folders/1
   def create
     @page_folder = PageFolder.new(page_folder_params)
-    @page_folder.root_folder ||= PageFolder.find(params[:id])
+    @page_folder.title.strip!
+    @page_folder.name ||= @page_folder.title.parameterize
+    @page_folder.root_folder ||= PageFolder.find_by(id: params[:id])
     @page_folder.path = File.join(@page_folder.root_folder.path, @page_folder.name)
 
     if @page_folder.save

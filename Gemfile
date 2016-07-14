@@ -18,12 +18,14 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'autoprefixer-rails'
+gem 'rs_russian', github: 'rs-pro/russian', branch: 'master'
 
 gem 'jquery-rails'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'turbolinks'
 gem 'i18n-js', '>= 3.0.0.rc11'
 gem 'lodash-rails'
+gem 'sweetalert-rails'
 
 group :development, :test do
   gem 'byebug'

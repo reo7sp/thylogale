@@ -1,10 +1,14 @@
 <div class="page-folders-topbar">
   <h1 class="page-folders-topbar__title"><%= @page_folder.title %></h1>
 
-  <%= link_to "#{glyphicon 'arrow-up'} #{t :go_up}".html_safe, @page_folder.root_folder, class: 'page-folders-topbar__back-btn' if @page_folder.root_folder_id? %>
+  <% if @page_folder.root_folder_id? %>
+      <%= link_to "#{glyphicon 'arrow-up'} #{t :go_up}".html_safe, @page_folder.root_folder,
+                  class: 'page-folders-topbar__back-btn'
+      %>
+  <% end %>
 
   <div class="page-folders-topbar__actions page-folders-actions">
-    <button class="page-folders-actions__item btn btn-primary" id="create-page-button" data-in-folder="<%= @page_folder.id %>">
+    <button class="page-folders-actions__item btn btn-success" id="create-page-button" data-in-folder="<%= @page_folder.id %>">
       <%= glyphicon 'plus'%> <%=t :new_page %>
     </button>
 

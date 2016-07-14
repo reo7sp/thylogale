@@ -49,3 +49,7 @@ en:
   new_folder: "New folder"
   enter_new_folder: "Enter new folder title"
   go_up: "Go up"
+  create_page_fail: "Can't create page"
+  create_page_folder_fail: "Can't create folder"
+  delete: "Delete"
+  move: "Move"
