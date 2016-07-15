@@ -67,13 +67,13 @@ class FirstSetupsController < ApplicationController
 
   def import_site
     case @first_setup.import_choice
-      when 'new'
-        # TODO: create welcome page
+    when 'new'
+      # TODO: create welcome page
 
-      when 'upload'
-        Zip::File.open(first_setup_params[:import_file]) do |zip|
-          # TODO: import files
-        end
+    when 'upload'
+      Zip::File.open(first_setup_params[:import_file]) do |zip|
+        # TODO: import files
+      end
     end
   end
 end

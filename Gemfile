@@ -1,28 +1,28 @@
 source 'https://rubygems.org'
 
-
-gem 'rails', '4.2.6'
+gem 'rails', '5.0.0'
 
 gem 'sqlite3'
 gem 'mysql2'
 gem 'pg'
 
+gem 'jbuilder'
+gem 'bcrypt'
 gem 'aws-sdk'
 gem 'mailgun_rails'
+gem 'rubyzip'
+gem 'redcarpet'
+gem 'liquid'
 
-gem 'jbuilder', '~> 2.0'
-gem 'bcrypt', '~> 3.1.7'
-gem 'rubyzip', '>= 1.0.0'
-
-gem 'coffee-rails', '~> 4.1.0'
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
+gem 'coffee-rails'
+gem 'sass-rails'
+gem 'uglifier'
 gem 'autoprefixer-rails'
 gem 'rs_russian', github: 'rs-pro/russian', branch: 'master'
 
 gem 'browserify-rails'
 gem 'jquery-rails'
-gem 'bootstrap-sass', '~> 3.3.6'
+gem 'bootstrap-sass', '~> 3'
 gem 'turbolinks'
 gem 'i18n-js', '>= 3.0.0.rc11'
 gem 'sweetalert-rails'
@@ -31,8 +31,8 @@ gem 'trix'
 group :development, :test do
   gem 'byebug'
 
-  gem 'rspec-rails', '~> 3.4'
-  gem 'factory_girl_rails', '~> 4.0'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
   gem 'database_cleaner'
 
   gem 'capybara'
@@ -41,14 +41,13 @@ group :development, :test do
 
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'meta_request'
 end
 
 group :development do
-  gem 'web-console', '~> 2.0'
+  gem 'web-console'
   gem 'spring'
 end
 
 group :doc do
-  gem 'sdoc', '~> 0.4.0'
+  gem 'sdoc'
 end

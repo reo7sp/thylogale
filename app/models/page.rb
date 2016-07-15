@@ -1,6 +1,7 @@
+require 'file_containers'
+
 class Page < ActiveRecord::Base
   belongs_to :root_folder, class_name: 'PageFolder', touch: true, counter_cache: true
-  has_one :template
 
   validates_presence_of :name, :title, :root_folder, :template
   validates_uniqueness_of :path
@@ -10,16 +11,7 @@ class Page < ActiveRecord::Base
   after_update :sync_update_with_container
 
   def container_service
-    if @container_service.nil?
-      setup = FirstSetup.instance
-      case setup.save_choice
-        when 'local'
-          @container_service = LocalPageContainer.new(self, setup)
-        when 's3'
-          @container_service = S3PageContainer.new(self, setup)
-      end
-    end
-    @container_service
+    @container_service ||= Thylogale.file_container('pages', path)
   end
 
   def data
