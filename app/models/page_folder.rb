@@ -11,6 +11,8 @@ class PageFolder < ActiveRecord::Base
   validates_presence_of :path
   validates_uniqueness_of :path
 
+  validates_presence_of :default_template
+
   def is_root?
     id == 1
   end

@@ -12,19 +12,11 @@
 #
 #= require jquery
 #= require jquery_ujs
-#= require turbolinks
 #= require bootstrap-sprockets
+#= require turbolinks
 #= require i18n/translations
-#= require lodash
 #= require sweetalert
-
-#= require extensions
-
-#= require_tree .
-
-#= require_self
-
-
-swal.setDefaults
-  cancelButtonText: I18n.t 'cancel'
-  confirmButtonText: I18n.t 'ok'
+#= require trix
+#
+#= require_directory .
+#= require_directory ./views

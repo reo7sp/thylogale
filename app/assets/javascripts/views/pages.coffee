@@ -1,0 +1,1 @@
+require('./pages/trix_extensions.coffee')()

@@ -20,8 +20,9 @@ class PagesController < ApplicationController
   def create
     @page = Page.new(page_params)
     @page.title.strip!
-    @page.name ||= @page.title.parameterize
     @page.root_folder ||= PageFolder.find_by(id: params[:page_folder_id])
+    @page.template ||= @page.root_folder.default_template
+    @page.name ||= "#{@page.title.parameterize}.#{@page.template.file_extension}"
     @page.path = File.join(@page.root_folder.path, @page.name)
 
     if @page.save

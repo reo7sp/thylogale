@@ -1,0 +1,44 @@
+<trix-toolbar class="page-toolbar" id="page-toolbar">
+  <div class="button_groups">
+    <span class="button_group text_tools">
+      <button type="button" class="bold" data-trix-attribute="bold" data-trix-key="b" title="<%=t :bold %>"><%=t :bold %></button>
+      <button type="button" class="italic" data-trix-attribute="italic" data-trix-key="i" title="<%= t :italic %>"><%= t :italic %></button>
+      <button type="button" class="strike" data-trix-attribute="strike" title="<%=t :strikethrough %>"><%=t :strikethrough %></button>
+      <button type="button" class="link" data-trix-attribute="href" data-trix-action="link" data-trix-key="k" title="<%=t :link %>"><%=t :link %></button>
+    </span>
+
+    <span class="button_group style_tools">
+      <button type="button" class="h1" data-trix-attribute="h1" title="<%=t :h1 %>">H1</button>
+      <button type="button" class="h2" data-trix-attribute="h2" title="<%=t :h2 %>">H2</button>
+      <button type="button" class="h3" data-trix-attribute="h3" title="<%=t :h3 %>">H3</button>
+    </span>
+
+    <span class="button_group block_tools">
+      <button type="button" class="quote" data-trix-attribute="quote" title="<%=t :quote %>"><%=t :quote %></button>
+      <button type="button" class="code" data-trix-attribute="code" title="<%=t :code %>"><%=t :code %></button>
+      <button type="button" class="list bullets" data-trix-attribute="bullet" title="<%=t :bullet_list %>"><%=t :bullet_list %></button>
+      <button type="button" class="list numbers" data-trix-attribute="number" title="<%=t :number_list %>"><%=t :number_list %></button>
+      <button type="button" class="block-level decrease" data-trix-action="decreaseBlockLevel" title="<%=t :decrease_level %>"><%=t :decrease_level %></button>
+      <button type="button" class="block-level increase" data-trix-action="increaseBlockLevel" title="<%=t :increase_level %>"><%=t :increase_level %></button>
+    </span>
+
+    <span class="button_group history_tools">
+      <button type="button" class="undo" data-trix-action="undo" data-trix-key="z" title="<%=t :undo %>" disabled=""><%=t :undo %></button>
+      <button type="button" class="redo" data-trix-action="redo" data-trix-key="shift+z" title="<%=t :redo %>" disabled=""><%=t :redo %></button>
+    </span>
+
+    <span class="status" id="page-status"></span>
+
+    <div class="dialogs">
+      <div class="dialog link_dialog" data-trix-attribute="href" data-trix-dialog="href">
+        <div class="link_url_fields">
+          <input type="url" required="" name="href" placeholder="<%=t :enter_url %>" disabled="disabled">
+          <div class="button_group">
+            <input type="button" value="<%=t :create_link %>" data-trix-method="setAttribute">
+            <input type="button" value="<%=t :remove_link %>" data-trix-method="removeAttribute">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</trix-toolbar>

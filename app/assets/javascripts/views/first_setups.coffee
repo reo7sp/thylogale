@@ -52,12 +52,8 @@ init = ->
     for id in ids
       do (id, ids) ->
         $(id).on 'change', (e) ->
-          for id2 in ids
-            if id2 == id
-              $("#{id2}_details").removeClass('hidden')
-            else
-              $("#{id2}_details").addClass('hidden')
-              
+          for id2 in ids 
+            $("#{id2}_details").toggleClass('hidden', id2 == id)
           check_form()
 
   for id in controls_ids
@@ -69,5 +65,4 @@ init = ->
 is_setup_page = -> $(document.body).attr('data-controller') == 'first_setups'
 
   
-if is_setup_page
-  init()
+init() if is_setup_page

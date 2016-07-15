@@ -1,0 +1,23 @@
+{
+  "name": "thylogale",
+  "description": "CMS for static sites",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reo7sp/thylogale.git"
+  },
+  "author": "Oleg Morozenkov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/reo7sp/thylogale/issues"
+  },
+  "homepage": "https://github.com/reo7sp/thylogale#readme",
+  "dependencies": {
+    "core-js": "^2.4.0",
+    "lodash": "^4.13.1"
+  },
+  "devDependencies": {
+    "browserify": "^13.0.1",
+    "browserify-incremental": "^3.1.1",
+    "coffeeify": "^2.0.1"
+  }
+}

@@ -12,6 +12,7 @@ class FirstSetupsController < ApplicationController
   def init
     save_setup
     create_admin_user
+    create_template
     create_site_container
     import_site
 
@@ -56,8 +57,12 @@ class FirstSetupsController < ApplicationController
     User.create!(admin_user_setup_params.merge(id: 1, name: 'admin'))
   end
 
+  def create_template
+    Template.create!(id: 1, name: 'markdown', )
+  end
+
   def create_site_container
-    PageFolder.create!(id: 1, name: '/', title: t(:site), path: '/')
+    PageFolder.create!(id: 1, name: '/', title: t(:site), path: '/', template: Template.first)
   end
 
   def import_site

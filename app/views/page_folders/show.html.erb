@@ -1,9 +1,6 @@
 <div class="container">
-  <% cache @page_folder.id do %>
-      <%= render 'topbar' %>
-  <% end %>
-
   <% cache @page_folder do %>
+      <%= render 'topbar' %>
       <%= render 'contents' %>
   <% end %>
 </div>

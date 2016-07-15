@@ -1,5 +1,7 @@
 <div class="page-folders-topbar">
-  <h1 class="page-folders-topbar__title"><%= @page_folder.title %></h1>
+  <h1 class="page-folders-topbar__title">
+    <%= @page_folder.title %>
+  </h1>
 
   <% if @page_folder.root_folder_id? %>
       <%= link_to "#{glyphicon 'arrow-up'} #{t :go_up}".html_safe, @page_folder.root_folder,

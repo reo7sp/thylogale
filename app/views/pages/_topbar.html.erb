@@ -1,0 +1,28 @@
+<div class="page-topbar">
+  <h1 class="page-topbar__title" id="page-topbar-title">
+    <%= @page.title %>
+  </h1>
+
+  <%= link_to "#{glyphicon 'arrow-up'} #{t :go_up}".html_safe, @page.root_folder,
+              class: 'page-topbar__back-btn'
+  %>
+
+  <div class="page-topbar__actions page-actions">
+    <div class="page-actions__item btn-group">
+      <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <%= link_to t(:preview), preview_page_path(@page) %>
+        </li>
+        <li>
+          <%= link_to t(:show_raw), raw_page_path(@page) %>
+        </li>
+      </ul>
+    </div>
+    <button class="page-actions__item btn btn-success" id="publish-page-button" data-page="<%= @page.id %>">
+      <%= glyphicon 'share' %> <%=t :publish %>
+    </button>
+  </div>
+</div>

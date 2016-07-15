@@ -1,7 +1,8 @@
 class Page < ActiveRecord::Base
   belongs_to :root_folder, class_name: 'PageFolder', touch: true, counter_cache: true
+  has_one :template
 
-  validates_presence_of :name, :title, :root_folder
+  validates_presence_of :name, :title, :root_folder, :template
   validates_uniqueness_of :path
 
   after_create { container_service.create }
