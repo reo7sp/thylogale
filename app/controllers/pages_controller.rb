@@ -22,13 +22,7 @@ class PagesController < ApplicationController
 
     @page.title.strip!
     @page.root_folder ||= PageFolder.find_by(id: params[:page_folder_id])
-    template =
-        if @page.template.nil?
-          Thylogale::SiteConfigs.templates.first
-        else
-          Thylogale::SiteConfigs.templates[@page.template]
-        end
-    @page.template ||= template.name
+    @page.template_instance ||= Thylogale::SiteConfigs.templates.first
     @page.name ||= "#{@page.title.parameterize}.#{template.file_extension}"
     @page.path = File.join(@page.root_folder.path, @page.name)
 
@@ -56,12 +50,10 @@ class PagesController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_page
     @page = Page.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def page_params
     params.require(:page).permit(:title, :name, :template, :root_folder_id)
   end

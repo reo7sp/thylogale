@@ -1,5 +1,6 @@
 module Thylogale
   module SiteConfigs
+
     @templates = Object.new
     class << @templates
       include Enumerable
@@ -33,6 +34,7 @@ module Thylogale
       end
       @templates
     end
+
   end
 end
 

@@ -6,6 +6,7 @@ module Thylogale
   def self.file_container(*path_array)
     path = File.join(path_array)
     setup = FirstSetup.instance
+
     case setup.save_choice
       when 'local'
         LocalFileContainer.new(path, setup)

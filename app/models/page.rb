@@ -20,6 +20,14 @@ class Page < ActiveRecord::Base
     container_service.write(data)
   end
 
+  def template_instance
+    Thylogale::SiteConfigs.templates[template]
+  end
+
+  def template_instance=(template)
+    self.template = template.name
+  end
+
   private
 
   def sync_update_with_container

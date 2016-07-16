@@ -13,7 +13,6 @@ module.exports = -> new class
       title: I18n.t "new_#{if folder then 'folder' else 'page'}"
       inputPlaceholder: I18n.t "enter_new_#{if folder then 'folder' else 'page'}"
       type: 'input'
-
       showCancelButton: true
       allowOutsideClick: true
       closeOnConfirm: false

@@ -21,6 +21,7 @@ class PageFoldersController < ApplicationController
   # POST /page_folders/1
   def create
     @page_folder = PageFolder.new(page_folder_params)
+
     @page_folder.title.strip!
     @page_folder.root_folder ||= PageFolder.find_by(id: params[:id])
     @page_folder.name ||= @page_folder.title.parameterize
@@ -50,12 +51,10 @@ class PageFoldersController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_page_folder
     @page_folder = PageFolder.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def page_folder_params
     params.require(:page_folder).permit(:title, :name, :root_folder_id)
   end

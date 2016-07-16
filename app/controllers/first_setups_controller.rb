@@ -11,7 +11,7 @@ class FirstSetupsController < ApplicationController
     @first_setup.transaction do
       save_setup
       create_admin_user
-      create_site_container
+      create_site_root_folder
       import_site
     end
 
@@ -56,31 +56,39 @@ class FirstSetupsController < ApplicationController
     User.create!(admin_user_setup_params.merge(id: 1, name: 'admin'))
   end
 
-  def create_site_container
+  def create_site_root_folder
     PageFolder.create!(id: 1, name: '/', title: t(:site), path: '/')
   end
 
   def import_site
     case @first_setup.import_choice
       when 'new'
-        site_scaffold_folder = File.expand_path('../../../site_scaffold', __FILE__)
-
-        entries = Dir[File.join(site_scaffold_folder, '**', '*')]
-        entries.reject! do |f|
-          File.directory?(f)
-        end
-        entries.each do |f|
-          canonical_path = f.sub(site_scaffold_folder, '')
-          canonical_path.slice!(0) if canonical_path[0] == '/'
-          Thylogale.file_container(canonical_path).write(File.read(f))
-        end
+        scaffold_site
 
       when 'upload'
-        Zip::File.open(first_setup_params[:import_file]) do |zip|
-          zip.each do |f|
-            Thylogale.file_container(f.name).write(f.get_input_stream.read)
-          end
-        end
+        extract_site
+    end
+  end
+
+  def scaffold_site
+    site_scaffold_folder = File.expand_path('../../../site_scaffold', __FILE__)
+
+    entries = Dir[File.join(site_scaffold_folder, '**', '*')]
+    entries.reject! do |f|
+      File.directory?(f)
+    end
+    entries.each do |f|
+      canonical_path = f.sub(site_scaffold_folder, '')
+      canonical_path.slice!(0) if canonical_path[0] == '/'
+      Thylogale.file_container(canonical_path).write(File.read(f))
+    end
+  end
+
+  def extract_site
+    Zip::File.open(first_setup_params[:import_file]) do |zip|
+      zip.each do |f|
+        Thylogale.file_container(f.name).write(f.get_input_stream.read)
+      end
     end
   end
 end
