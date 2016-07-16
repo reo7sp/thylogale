@@ -1,5 +1,3 @@
-require_relative '../../lib/locations'
-
 class FirstSetupsController < ApplicationController
   before_action :check_done
   before_action :check_env
@@ -12,9 +10,9 @@ class FirstSetupsController < ApplicationController
   def init
     save_setup
     create_admin_user
-    create_template
     create_site_container
     import_site
+    mark_setup_as_done
 
     redirect_to page_folders_path
   end
@@ -46,9 +44,8 @@ class FirstSetupsController < ApplicationController
 
   def save_setup
     additional_params = {
-        done: true,
         site_domain: ENV['SITE_DOMAIN'],
-        save_local_dir: File.join(Locations.sites_default, ENV['SITE_DOMAIN'])
+        save_local_dir: File.join(Thylogale::Locations.sites_default, ENV['SITE_DOMAIN'])
     }
     @first_setup.update!(first_setup_params.merge(additional_params))
   end
@@ -57,12 +54,8 @@ class FirstSetupsController < ApplicationController
     User.create!(admin_user_setup_params.merge(id: 1, name: 'admin'))
   end
 
-  def create_template
-    Template.create!(id: 1, name: 'markdown', )
-  end
-
   def create_site_container
-    PageFolder.create!(id: 1, name: '/', title: t(:site), path: '/', template: Template.first)
+    PageFolder.create!(id: 1, name: '/', title: t(:site), path: '/')
   end
 
   def import_site
@@ -75,5 +68,9 @@ class FirstSetupsController < ApplicationController
         # TODO: import files
       end
     end
+  end
+
+  def mark_setup_as_done
+    @first_setup.update!(done: true)
   end
 end

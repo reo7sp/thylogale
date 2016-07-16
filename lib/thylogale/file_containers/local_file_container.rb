@@ -1,5 +1,3 @@
-require 'fileutils'
-
 module Thylogale
   class LocalFileContainer
     attr_reader :path

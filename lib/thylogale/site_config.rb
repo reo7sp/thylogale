@@ -1,0 +1,1 @@
+require_relative 'site_config/templates'

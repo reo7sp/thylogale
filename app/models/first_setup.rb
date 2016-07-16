@@ -5,8 +5,6 @@ class FirstSetup < ActiveRecord::Base
     errors.add(:only_one_instance, 'is allowed') if FirstSetup.count > 0
   end
 
-  validates_presence_of :done, on: :update
-
   validates_presence_of :site_domain, :save_choice, :email_choice, if: :done
 
   validates_presence_of :save_local_dir, if: "save_choice == 'local'"

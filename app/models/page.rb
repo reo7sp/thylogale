@@ -1,5 +1,3 @@
-require 'file_containers'
-
 class Page < ActiveRecord::Base
   belongs_to :root_folder, class_name: 'PageFolder', touch: true, counter_cache: true
 
