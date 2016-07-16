@@ -3,8 +3,8 @@ module Thylogale
     module Handlers
 
       class Base
-        def name
-          self.class.to_s.demodulize.underscore
+        def self.name
+          super.demodulize.underscore
         end
 
         protected

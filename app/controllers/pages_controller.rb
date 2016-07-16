@@ -19,10 +19,17 @@ class PagesController < ApplicationController
   # POST /page_folders/1/pages
   def create
     @page = Page.new(page_params)
+
     @page.title.strip!
     @page.root_folder ||= PageFolder.find_by(id: params[:page_folder_id])
-    @page.template ||= Thylogale::SiteConfigs.templates.first
-    @page.name ||= "#{@page.title.parameterize}.#{@page.template.file_extension}"
+    template =
+        if @page.template.nil?
+          Thylogale::SiteConfigs.templates.first
+        else
+          Thylogale::SiteConfigs.templates[@page.template]
+        end
+    @page.template ||= template.name
+    @page.name ||= "#{@page.title.parameterize}.#{template.file_extension}"
     @page.path = File.join(@page.root_folder.path, @page.name)
 
     if @page.save

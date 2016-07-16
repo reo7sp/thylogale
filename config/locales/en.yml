@@ -56,7 +56,7 @@ en:
   delete: "Delete"
   move: "Move"
   cancel: "Cancel"
-  ok: "Ok"
+  ok: "OK"
   title_cant_be_empty: "Title can't be empty"
   publish: "Publish"
   preview: "Preview"

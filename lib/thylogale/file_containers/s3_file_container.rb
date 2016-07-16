@@ -43,6 +43,8 @@ module Thylogale
     def cache
       file = Tempfile.new
       file.write(read)
+      file.close
+      file.open
       file
     end
   end

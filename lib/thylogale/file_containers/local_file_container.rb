@@ -12,22 +12,30 @@ module Thylogale
     end
 
     def create
-      FileUtils.mkdir_p(File.dirname(abs_path))
-      FileUtils.touch(abs_path)
+      f = abs_path
+      FileUtils.mkdir_p(File.dirname(f))
+      FileUtils.touch(f)
     end
 
     def destroy
-      FileUtils.rm(abs_path)
+      f = abs_path
+      FileUtils.rm(f)
+      rm_r_empty(File.dirname(f))
     end
 
     def copy(to_path)
-      FileUtils.mkdir_p(File.dirname(abs_path(to_path)))
-      FileUtils.cp(abs_path, abs_path(to_path))
+      f = abs_path
+      to_f = abs_path(to_path)
+      FileUtils.mkdir_p(File.dirname(to_f))
+      FileUtils.cp(f, to_f)
     end
 
     def move(to_path)
-      FileUtils.mkdir_p(File.dirname(abs_path(to_path)))
-      FileUtils.mv(abs_path, abs_path(to_path))
+      f = abs_path
+      to_f = abs_path(to_path)
+      FileUtils.mkdir_p(File.dirname(to_f))
+      FileUtils.mv(f, to_f)
+      rm_r_empty(File.dirname(f))
     end
 
     def read
@@ -35,13 +43,26 @@ module Thylogale
     end
 
     def write(text)
-      File.write(abs_path, text)
+      f = abs_path
+      FileUtils.mkdir_p(File.dirname(f))
+      File.write(f, text)
     end
 
     def cache
       file = Tempfile.new
       file.write(read)
+      file.close
+      file.open
       file
+    end
+
+    private
+
+    def rm_r_empty(dir)
+      if Dir.empty?(dir)
+        FileUtils.rm_r(dir)
+        rm_r_empty(File.dirname(dir))
+      end
     end
   end
 end

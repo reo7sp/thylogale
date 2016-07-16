@@ -8,11 +8,12 @@ class FirstSetupsController < ApplicationController
 
   # POST /setup
   def init
-    save_setup
-    create_admin_user
-    create_site_container
-    import_site
-    mark_setup_as_done
+    @first_setup.transaction do
+      save_setup
+      create_admin_user
+      create_site_container
+      import_site
+    end
 
     redirect_to page_folders_path
   end
@@ -44,6 +45,7 @@ class FirstSetupsController < ApplicationController
 
   def save_setup
     additional_params = {
+        done: true,
         site_domain: ENV['SITE_DOMAIN'],
         save_local_dir: File.join(Thylogale::Locations.sites_default, ENV['SITE_DOMAIN'])
     }
@@ -60,17 +62,25 @@ class FirstSetupsController < ApplicationController
 
   def import_site
     case @first_setup.import_choice
-    when 'new'
-      # TODO: create welcome page
+      when 'new'
+        site_scaffold_folder = File.expand_path('../../../site_scaffold', __FILE__)
 
-    when 'upload'
-      Zip::File.open(first_setup_params[:import_file]) do |zip|
-        # TODO: import files
-      end
+        entries = Dir[File.join(site_scaffold_folder, '**', '*')]
+        entries.reject! do |f|
+          File.directory?(f)
+        end
+        entries.each do |f|
+          canonical_path = f.sub(site_scaffold_folder, '')
+          canonical_path.slice!(0) if canonical_path[0] == '/'
+          Thylogale.file_container(canonical_path).write(File.read(f))
+        end
+
+      when 'upload'
+        Zip::File.open(first_setup_params[:import_file]) do |zip|
+          zip.each do |f|
+            Thylogale.file_container(f.name).write(f.get_input_stream.read)
+          end
+        end
     end
-  end
-
-  def mark_setup_as_done
-    @first_setup.update!(done: true)
   end
 end

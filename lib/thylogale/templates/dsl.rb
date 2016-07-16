@@ -1,5 +1,7 @@
 module Thylogale
-  def template(name, &block)
-    SiteConfigs.templates << Templates::Base.new(name).instance_eval(&block)
+  def self.template(name, &block)
+    template = Templates::Base.new(name)
+    template.instance_eval(&block)
+    SiteConfigs._loaded_templates << template
   end
 end

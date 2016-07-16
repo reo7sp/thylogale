@@ -3,9 +3,6 @@ module Thylogale
 
     class Base
       attr_reader :name
-      attr_accessor :file_extension
-
-      alias_method :file_extension, :file_extension=
 
       def initialize(name)
         @name  = name
@@ -14,6 +11,18 @@ module Thylogale
 
       def pipe(handler, *options)
         @pipes << { handler: Handlers.handlers[handler], options: options }
+      end
+
+      def file_extension(extension = nil)
+        if extension.nil?
+          @file_extension
+        else
+          @file_extension = extension
+        end
+      end
+
+      def file_extension=(extension)
+        @file_extension = extension
       end
     end
 
