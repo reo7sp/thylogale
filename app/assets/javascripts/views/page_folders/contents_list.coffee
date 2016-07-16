@@ -1,15 +1,20 @@
 module.exports = -> new class
   constructor: ->
+    visitEntry = @visitEntry.bind(@)
     doWithEntry = @doWithEntry.bind(@)
 
     $(document).on 'click', '.page-folders-list__row', ->
-      Turbolinks.visit $(@).data('href')
+      visitEntry($(@).data('href'))
 
-    $(document).on 'click', '.page-folders-list__action', ->
+    $(document).on 'click', '.page-folders-list__action', (e) ->
       entry = $(@).data('folder')
       isFolder = entry?
       entry ?= $(@).data('page')
       doWithEntry(entry, $(@).data('action'), {isFolder})
+      e.stopPropagation()
+
+  visitEntry: (href) ->
+    Turbolinks.visit href
 
   doWithEntry: (entry, action, {isFolder}) ->
     switch action

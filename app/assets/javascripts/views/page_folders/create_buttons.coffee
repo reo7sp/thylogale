@@ -34,6 +34,7 @@ module.exports = -> new class
             title: title
 
       p.done ->
+        swal.close()
         Turbolinks.visit window.location.href, action: 'replace'
 
       p.fail (e) ->
