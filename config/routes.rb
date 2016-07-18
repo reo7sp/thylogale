@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   resources :page_folders, except: [:edit, :new, :create] do
     resources :pages, except: [:index, :edit, :new], shallow: true do
+      resources :assets
+
       member do
         get 'preview'
         get 'raw'
