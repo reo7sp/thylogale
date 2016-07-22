@@ -1,24 +1,11 @@
 class Page < ActiveRecord::Base
+  include RecordWithFileContainer
+
   belongs_to :root_folder, class_name: 'PageFolder', touch: true, counter_cache: true
+  has_many :page_assets, dependent: :destroy
 
-  validates_presence_of :name, :title, :root_folder, :template
+  validates_presence_of :name, :title, :root_folder, :template, :path
   validates_uniqueness_of :path
-
-  after_create { container_service.create }
-  after_destroy { container_service.destroy }
-  after_update :sync_update_with_container
-
-  def container_service
-    @container_service ||= Thylogale.file_container('pages', path)
-  end
-
-  def data
-    container_service.read
-  end
-
-  def data=(data)
-    container_service.write(data)
-  end
 
   def template_instance
     Thylogale::SiteConfigs.templates[template]
@@ -26,11 +13,5 @@ class Page < ActiveRecord::Base
 
   def template_instance=(template)
     self.template = template.name
-  end
-
-  private
-
-  def sync_update_with_container
-    # TODO
   end
 end

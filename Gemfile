@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.0.0'
+gem 'rails', '~> 5'
 
 gem 'sqlite3'
 gem 'mysql2'
@@ -25,8 +25,11 @@ gem 'jquery-rails'
 gem 'bootstrap-sass', '~> 3'
 gem 'turbolinks'
 gem 'i18n-js', '>= 3.0.0.rc11'
-gem 'sweetalert-rails'
-gem 'trix'
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-sweetalert'
+  gem 'rails-assets-toastr'
+end
 
 group :development, :test do
   gem 'byebug'

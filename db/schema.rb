@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160707194933) do
+ActiveRecord::Schema.define(version: 20160722165815) do
 
   create_table "first_setups", force: :cascade do |t|
     t.boolean  "done",                  default: false
@@ -28,6 +27,15 @@ ActiveRecord::Schema.define(version: 20160707194933) do
     t.string   "site_domain"
   end
 
+  create_table "page_assets", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "page_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "mime"
+    t.index ["page_id"], name: "index_page_assets_on_page_id"
+  end
+
   create_table "page_folders", force: :cascade do |t|
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
@@ -37,21 +45,20 @@ ActiveRecord::Schema.define(version: 20160707194933) do
     t.string   "title"
     t.string   "path"
     t.integer  "subfolders_count"
+    t.index ["root_folder_id"], name: "index_page_folders_on_root_folder_id"
   end
-
-  add_index "page_folders", ["root_folder_id"], name: "index_page_folders_on_root_folder_id"
 
   create_table "pages", force: :cascade do |t|
     t.string   "title"
     t.string   "name"
     t.string   "template"
     t.integer  "root_folder_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.string   "path"
+    t.integer  "page_assets_count"
+    t.index ["root_folder_id"], name: "index_pages_on_root_folder_id"
   end
-
-  add_index "pages", ["root_folder_id"], name: "index_pages_on_root_folder_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "name"

@@ -1,40 +1,37 @@
-module.exports = -> new class
-  constructor: ->
-    visitEntry = @visitEntry.bind(@)
-    doWithEntry = @doWithEntry.bind(@)
+visitEntry = (href) ->
+  Turbolinks.visit href
 
-    $(document).on 'click', '.page-folders-list__row', ->
-      visitEntry($(@).data('href'))
+moveEntry = (entry, {isFolder}) ->
+  # TODO
 
-    $(document).on 'click', '.page-folders-list__action', (e) ->
-      entry = $(@).data('folder')
-      isFolder = entry?
-      entry ?= $(@).data('page')
-      doWithEntry(entry, $(@).data('action'), {isFolder})
-      e.stopPropagation()
+deleteEntry = (entry, {isFolder}) ->
+  p = $.ajax
+    url: "/#{if isFolder then 'page_folders' else 'pages'}/#{entry}"
+    method: 'DELETE'
 
-  visitEntry: (href) ->
-    Turbolinks.visit href
+  p.done ->
+    Turbolinks.visit window.location.href, action: 'replace'
 
-  doWithEntry: (entry, action, {isFolder}) ->
-    switch action
-      when 'move' then @moveEntry(entry, {isFolder})
-      when 'delete' then @deleteEntry(entry, {isFolder})
+  p.fail (e) ->
+    console.log e
+    swal
+      title: I18n.t 'error'
+      text: I18n.t "delete_#{if isFolder then 'folder' else 'page'}_fail"
+      type: 'error'
+
+doWithEntry = (entry, action, {isFolder}) ->
+  switch action
+    when 'move' then moveEntry(entry, {isFolder})
+    when 'delete' then deleteEntry(entry, {isFolder})
       
-  moveEntry: (entry, {isFolder}) ->
-    # TODO
+    
+$(document).on 'click', '.page-folders-list__row', ->
+  visitEntry($(@).data('href'))
 
-  deleteEntry: (entry, {isFolder}) ->
-    p = $.ajax
-      url: "/#{if isFolder then 'page_folders' else 'pages'}/#{entry}"
-      method: 'DELETE'
+$(document).on 'click', '.page-folders-list__action', (e) ->
+  entry = $(@).data('folder')
+  isFolder = entry?
+  entry ?= $(@).data('page')
+  doWithEntry(entry, $(@).data('action'), {isFolder})
+  e.stopPropagation()
 
-    p.done ->
-      Turbolinks.visit window.location.href, action: 'replace'
-
-    p.fail (e) ->
-      console.log e
-      swal
-        title: I18n.t 'error'
-        text: I18n.t "delete_#{if isFolder then 'folder' else 'page'}_fail"
-        type: 'error'

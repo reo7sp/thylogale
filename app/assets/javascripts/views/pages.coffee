@@ -1,1 +1,2 @@
-require('./pages/trix_extensions.coffee')()
+require './pages/quill.coffee'
+require './pages/publish_button.coffee'

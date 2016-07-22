@@ -2,11 +2,9 @@ class FirstSetupsController < ApplicationController
   before_action :check_done
   before_action :check_env
 
-  # GET /setup
   def setup
   end
 
-  # POST /setup
   def init
     @first_setup.transaction do
       save_setup

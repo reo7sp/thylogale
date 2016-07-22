@@ -97,5 +97,5 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 
-  config.fail_fast = true
+  # config.fail_fast = true
 end

@@ -79,3 +79,4 @@ en:
   redo: "Redo"
   create_link: "Create link"
   remove_link: "Remove link"
+  cant_save_asset: "Can't save asset"

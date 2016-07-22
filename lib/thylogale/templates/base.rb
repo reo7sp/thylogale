@@ -9,8 +9,14 @@ module Thylogale
         @pipes = []
       end
 
-      def pipe(handler, *options)
-        @pipes << { handler: Handlers.handlers[handler], options: options }
+      def pipe(*options, &block)
+        if block_given?
+          @pipes << Pipe.new(Handlers::ProcHandler.new(block), options)
+        else
+          handler = options.fetch(0)
+          handler_options = options.drop(1)
+          @pipes << Pipe.new(Handlers.handlers[handler], handler_options)
+        end
       end
 
       def file_extension(extension = nil)

@@ -16,7 +16,8 @@
 #= require turbolinks
 #= require i18n/translations
 #= require sweetalert
-#= require trix
+#= require quill
+#= require toastr
 #
 #= require_directory .
 #= require_directory ./views

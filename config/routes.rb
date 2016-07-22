@@ -5,18 +5,22 @@ Rails.application.routes.draw do
   match '/setup', to: 'first_setups#init', via: [:post, :put, :patch], as: :init
 
   resources :page_folders, except: [:edit, :new, :create] do
-    resources :pages, except: [:index, :edit, :new], shallow: true do
-      resources :assets
+    member do
+      post 'subfolders', to: 'page_folders#create'
+      get 'search'
+    end
 
+    resources :pages, except: [:index, :edit, :new], shallow: true do
       member do
         get 'preview'
         get 'raw'
       end
-    end
 
-    member do
-      get 'search'
+      resources :page_assets, except: [:index, :edit, :new], shallow: true  do
+        member do
+          get 'raw'
+        end
+      end
     end
   end
-  match '/page_folders/:id', to: 'page_folders#create', via: :post, as: :create
 end

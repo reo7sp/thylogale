@@ -39,18 +39,18 @@ module Thylogale
     end
 
     def read
-      File.read(abs_path)
+      File.binread(abs_path)
     end
 
     def write(text)
       f = abs_path
       FileUtils.mkdir_p(File.dirname(f))
-      File.write(f, text)
+      File.binwrite(f, text)
     end
 
     def cache
       file = Tempfile.new
-      file.write(read)
+      file.binwrite(read)
       file.close
       file.open
       file

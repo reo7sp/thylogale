@@ -9,8 +9,8 @@ module Thylogale
 
         protected
 
-        def self.register(as: name)
-          Handlers.register_handler(as, new)
+        def self.register(*constructor_args, as: name)
+          Handlers.register_handler(as, new(*constructor_args))
         end
       end
 
