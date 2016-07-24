@@ -3,7 +3,6 @@ module Thylogale
 
     class TemplateListener
       def initialize(proc)
-        super
         @proc = proc
       end
 

@@ -3,20 +3,16 @@ class PageAssetsController < ApplicationController
 
   def show
     respond_to do |format|
-      format.html { redirect_to raw_page_asset_path }
       format.json
+      format.all { render plain: @page_asset.data, content_type: get_mime_from_file_name(@page_asset.name) }
     end
-  end
-
-  def raw
-    render plain: @page_asset.data, content_type: get_mime_from_file_name(@page_asset.name)
   end
 
   def create
     @page_asset = PageAsset.new(page_asset_params)
 
     @page_asset.mime = page_asset_params[:data].content_type
-    @page_asset.name ||= "#{Random.string}.#{get_extension(@page_asset.mime)}"
+    @page_asset.name ||= "#{Thylogale.random_string}.#{get_extension(@page_asset.mime)}"
 
     if @page_asset.save
       render json: {id: @page_asset.id, path: page_asset_path(@page_asset)}, status: :created

@@ -9,8 +9,8 @@ module Thylogale
       end
 
       def make_pipe(*options, &block)
-        case options.first.class
-        when Symbol
+        case options.first
+        when Symbol, String
           handler                 = options.fetch(0)
           handler_options         = options.drop(1)
           handler_options[:block] = block if block_given?

@@ -24,7 +24,7 @@ module Thylogale
       class TemplatesArray < Array
         def [](*options)
           case options.first
-          when String|Symbol
+          when String, Symbol
             name = options.first.to_s
             find { |t| t.name == name }
           else

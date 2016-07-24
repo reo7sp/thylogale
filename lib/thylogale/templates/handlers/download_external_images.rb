@@ -7,6 +7,8 @@ module Thylogale
     module Handlers
 
       class DownloadExternalImages < Base
+        register
+
         def process(contents)
           doc = Nokogiri::HTML(contents)
 
@@ -27,9 +29,10 @@ module Thylogale
           semicolon_index = src.index(';')
           mime            = data[5..semicolon_index]
           contents        = Base64.decode64(data.slice(semicolon_index + 8, -1))
-          name            = "#{Random.string}.#{get_extension(mime)}"
+          name            = "#{Thylogale.random_string}.#{get_extension(mime)}"
 
-          PageAsset.create!(name: name, mime: mime, data: contents)
+          asset = PageAsset.create!(name: name, mime: mime, data: contents)
+          "/page_assets/#{asset.id}"
         end
 
         def save_external_image(src)
@@ -40,6 +43,7 @@ module Thylogale
           contents = resp.body
 
           PageAsset.create!(name: name, mime: mime, data: contents)
+          "/page_assets/#{asset.id}"
         end
 
         def get_mime(extension)

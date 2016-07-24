@@ -1,3 +1,5 @@
+require './quill/autosaveModule.coffee'
+
 pageHandlers = require './page_handlers.coffee'
 loadTextToEditor = require './quill/loadTextToEditor.coffee'
 
