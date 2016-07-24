@@ -43,8 +43,8 @@ class FirstSetupsController < ApplicationController
 
   def save_setup
     additional_params = {
-        done: true,
-        site_domain: ENV['SITE_DOMAIN'],
+        done:           true,
+        site_domain:    ENV['SITE_DOMAIN'],
         save_local_dir: File.join(Thylogale::Locations.sites_default, ENV['SITE_DOMAIN'])
     }
     @first_setup.update!(first_setup_params.merge(additional_params))

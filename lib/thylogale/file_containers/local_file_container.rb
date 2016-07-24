@@ -24,14 +24,14 @@ module Thylogale
     end
 
     def copy(to_path)
-      f = abs_path
+      f    = abs_path
       to_f = abs_path(to_path)
       FileUtils.mkdir_p(File.dirname(to_f))
       FileUtils.cp(f, to_f)
     end
 
     def move(to_path)
-      f = abs_path
+      f    = abs_path
       to_f = abs_path(to_path)
       FileUtils.mkdir_p(File.dirname(to_f))
       FileUtils.mv(f, to_f)

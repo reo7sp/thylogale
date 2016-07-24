@@ -19,7 +19,7 @@ class PageFoldersController < ApplicationController
     @page_folder.title.strip!
     @page_folder.root_folder ||= PageFolder.find_by(id: params[:id])
     @page_folder.name        ||= @page_folder.title.parameterize
-    @page_folder.path          = File.join(@page_folder.root_folder.path, @page_folder.name)
+    @page_folder.path        = File.join(@page_folder.root_folder.path, @page_folder.name)
 
     if @page_folder.save
       render json: {id: @page_folder.id, path: page_folder_path(@page_folder)}, status: :created

@@ -7,8 +7,8 @@ module Thylogale
       attr_reader :name
 
       def initialize(name)
-        @name  = name
-        @on_save_listeners = []
+        @name                 = name
+        @on_save_listeners    = []
         @on_publish_listeners = []
       end
 

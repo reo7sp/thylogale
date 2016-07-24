@@ -22,9 +22,6 @@ class FirstSetup < ActiveRecord::Base
   private
 
   def initialize_s3
-    Aws.config.update({
-      region: save_s3_region,
-      credentials: Aws::Credentials.new(save_s3_access_key, save_s3_secret)
-    })
+    Aws.config.update(region: save_s3_region, credentials: Aws::Credentials.new(save_s3_access_key, save_s3_secret))
   end
 end

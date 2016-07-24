@@ -15,7 +15,7 @@ class PageAssetsController < ApplicationController
   def create
     @page_asset = PageAsset.new(page_asset_params)
 
-    @page_asset.mime   = page_asset_params[:data].content_type
+    @page_asset.mime = page_asset_params[:data].content_type
     @page_asset.name ||= "#{Random.string}.#{get_extension(@page_asset.mime)}"
 
     if @page_asset.save

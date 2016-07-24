@@ -11,8 +11,8 @@ module Thylogale
       def make_pipe(*options, &block)
         case options.first.class
         when Symbol
-          handler = options.fetch(0)
-          handler_options = options.drop(1)
+          handler                 = options.fetch(0)
+          handler_options         = options.drop(1)
           handler_options[:block] = block if block_given?
           Pipe.new(Handlers.handlers[handler], handler_options)
         when Handlers::Base

@@ -4,7 +4,7 @@ require_relative 'file_containers/s3_file_container'
 module Thylogale
 
   def self.file_container(*path_array)
-    path = File.join(*path_array)
+    path  = File.join(*path_array)
     setup = FirstSetup.instance
 
     case setup.save_choice

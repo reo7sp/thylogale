@@ -7,11 +7,19 @@ class Page < ActiveRecord::Base
   validates_presence_of :name, :title, :root_folder, :template, :path
   validates_uniqueness_of :path
 
+  before_save :apply_template, if: :data_changed?
+
   def template_instance
     Thylogale::SiteConfigs.templates[template]
   end
 
   def template_instance=(template)
     self.template = template.name
+  end
+
+  private
+
+  def apply_template
+    template_instance.process
   end
 end

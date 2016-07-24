@@ -19,7 +19,7 @@ class PagesController < ApplicationController
     @page.root_folder       ||= PageFolder.find_by(id: params[:page_folder_id])
     @page.template_instance ||= Thylogale::SiteConfigs.templates.first
     @page.name              ||= "#{@page.title.parameterize}.#{@page.template_instance.file_extension}"
-    @page.path                = File.join(@page.root_folder.path, @page.name)
+    @page.path              = File.join(@page.root_folder.path, @page.name)
 
     if @page.save
       render json: {id: @page.id, path: page_path(@page)}, status: :created
