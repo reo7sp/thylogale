@@ -2,7 +2,7 @@ module Thylogale
   module Templates
     module Handlers
 
-      class ProcHandler < Base
+      class Proc < Base
         def initialize(proc)
           super
           @proc = proc

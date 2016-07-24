@@ -60,11 +60,10 @@ class FirstSetupsController < ApplicationController
 
   def import_site
     case @first_setup.import_choice
-      when 'new'
-        scaffold_site
-
-      when 'upload'
-        extract_site
+    when 'new'
+      scaffold_site
+    when 'upload'
+      extract_site
     end
   end
 

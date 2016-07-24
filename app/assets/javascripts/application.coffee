@@ -17,7 +17,6 @@
 #= require i18n/translations
 #= require sweetalert
 #= require quill
-#= require toastr
 #
 #= require_directory .
 #= require_directory ./views

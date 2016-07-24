@@ -7,10 +7,12 @@ module Thylogale
           super.demodulize.underscore
         end
 
-        protected
+        def register(as: self.class.name)
+          Handlers.register_handler(as, self)
+        end
 
         def self.register(*constructor_args, as: name)
-          Handlers.register_handler(as, new(*constructor_args))
+          new(*constructor_args).register(as: as)
         end
       end
 

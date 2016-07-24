@@ -13,6 +13,7 @@ gem 'mailgun_rails'
 gem 'rubyzip'
 gem 'redcarpet'
 gem 'liquid'
+gem 'nokogiri'
 
 gem 'coffee-rails'
 gem 'sass-rails'
@@ -28,7 +29,6 @@ gem 'i18n-js', '>= 3.0.0.rc11'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-sweetalert'
-  gem 'rails-assets-toastr'
 end
 
 group :development, :test do

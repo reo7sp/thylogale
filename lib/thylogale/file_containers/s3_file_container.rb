@@ -40,11 +40,11 @@ module Thylogale
       @object.put(text)
     end
 
-    def cache
+    def cache(open: true, fast: false)
       file = Tempfile.new
       file.write(read)
       file.close
-      file.open
+      file.open if open
       file
     end
   end

@@ -48,12 +48,16 @@ module Thylogale
       File.binwrite(f, text)
     end
 
-    def cache
-      file = Tempfile.new
-      file.binwrite(read)
-      file.close
-      file.open
-      file
+    def cache(open: true, fast: false)
+      if fast
+        File.new(abs_path)
+      else
+        file = Tempfile.new
+        file.binwrite(read)
+        file.close
+        file.open if open
+        file
+      end
     end
 
     private

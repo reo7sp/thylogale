@@ -1,14 +1,26 @@
 Thylogale.template 'page' do
   file_extension 'md'
 
-  pipe :markdown
-  pipe :template, 'page.html.liquid'
+  on_save do
+    pipe :download_external_images
+  end
+
+  on_publish do
+    pipe :markdown
+    pipe :template, 'page.html.liquid'
+  end
 end
 
 Thylogale.template 'generated page' do
   file_extension 'md.liquid'
 
-  pipe :liquid
-  pipe :markdown
-  pipe :template, 'page.html.liquid'
+  on_save do
+    pipe :download_external_images
+  end
+
+  on_publish do
+    pipe :liquid
+    pipe :markdown
+    pipe :template, 'page.html.liquid'
+  end
 end

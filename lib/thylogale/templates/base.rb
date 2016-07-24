@@ -2,33 +2,34 @@ module Thylogale
   module Templates
 
     class Base
+      include TemplatesDSL
+
       attr_reader :name
 
       def initialize(name)
         @name  = name
-        @pipes = []
+        @on_save_listeners = []
+        @on_publish_listeners = []
       end
 
-      def pipe(*options, &block)
-        if block_given?
-          @pipes << Pipe.new(Handlers::ProcHandler.new(block), options)
-        else
-          handler = options.fetch(0)
-          handler_options = options.drop(1)
-          @pipes << Pipe.new(Handlers.handlers[handler], handler_options)
+      def process_save(contents)
+        process(contents, @on_save_listeners)
+      end
+
+      def process_publish(contents)
+        process(contents, @on_publish_listeners)
+      end
+
+      def register
+        Templates.register_template(self)
+      end
+
+      private
+
+      def process(contents, listeners)
+        listeners.reduce(contents) do |memo, listener|
+          listener.process(memo)
         end
-      end
-
-      def file_extension(extension = nil)
-        if extension.nil?
-          @file_extension
-        else
-          @file_extension = extension
-        end
-      end
-
-      def file_extension=(extension)
-        @file_extension = extension
       end
     end
 

@@ -8,10 +8,10 @@ module Thylogale
     setup = FirstSetup.instance
 
     case setup.save_choice
-      when 'local'
-        LocalFileContainer.new(path, setup)
-      when 's3'
-        S3FileContainer.new(path, setup)
+    when 'local'
+      LocalFileContainer.new(path, setup)
+    when 's3'
+      S3FileContainer.new(path, setup)
     end
   end
 

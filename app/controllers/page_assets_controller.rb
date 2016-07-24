@@ -9,13 +9,14 @@ class PageAssetsController < ApplicationController
   end
 
   def raw
-    render plain: @page_asset.data, content_type: get_mime_of_file(@page_asset.name)
+    render plain: @page_asset.data, content_type: get_mime_from_file_name(@page_asset.name)
   end
 
   def create
-    @page_asset      = PageAsset.new(page_asset_params)
-    @page_asset.mime = page_asset_params[:data].content_type
-    @page_asset.name ||= "#{random_string}.#{get_extension(@page_asset.mime)}"
+    @page_asset = PageAsset.new(page_asset_params)
+
+    @page_asset.mime   = page_asset_params[:data].content_type
+    @page_asset.name ||= "#{Random.string}.#{get_extension(@page_asset.mime)}"
 
     if @page_asset.save
       render json: {id: @page_asset.id, path: page_asset_path(@page_asset)}, status: :created
@@ -47,15 +48,11 @@ class PageAssetsController < ApplicationController
     params.require(:page_asset).permit(:name, :page_id, :data)
   end
 
-  def random_string(n = 12)
-    SecureRandom.hex(n)
-  end
-
   def get_mime(extension)
     Mime::Type.lookup_by_extension(extension)
   end
 
-  def get_mime_of_file(file_name)
+  def get_mime_from_file_name(file_name)
     get_mime(File.extname_without_dot(file_name))
   end
 
