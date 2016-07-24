@@ -3,7 +3,7 @@ class PageAssetsController < ApplicationController
 
   def show
     respond_to do |format|
-      format.html { redirect_to :raw_page_asset }
+      format.html { redirect_to raw_page_asset_path }
       format.json
     end
   end
@@ -46,17 +46,5 @@ class PageAssetsController < ApplicationController
 
   def page_asset_params
     params.require(:page_asset).permit(:name, :page_id, :data)
-  end
-
-  def get_mime(extension)
-    Mime::Type.lookup_by_extension(extension)
-  end
-
-  def get_mime_from_file_name(file_name)
-    get_mime(File.extname_without_dot(file_name))
-  end
-
-  def get_extension(mime)
-    Mime::Type.lookup(mime).to_sym
   end
 end

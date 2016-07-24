@@ -7,19 +7,26 @@ class Page < ActiveRecord::Base
   validates_presence_of :name, :title, :root_folder, :template, :path
   validates_uniqueness_of :path
 
-  before_save :apply_template, if: :data_changed?
+  before_save :apply_template_on_save, if: :data_changed?
 
   def template_instance
-    Thylogale::SiteConfigs.templates[template]
+    @template_instance ||= Thylogale::Templates.templates[template]
   end
 
-  def template_instance=(template)
-    self.template = template.name
+  def template_instance=(template_instance)
+    @template_instance = template_instance
+    self.template      = template_instance.name
+  end
+
+  def publish
+    contents = template_instance.process_publish(data)
+    file_container = Thylogale.file_container('published', path)
+    file_container.write(contents)
   end
 
   private
 
-  def apply_template
-    template_instance.process
+  def apply_template_on_save
+    template_instance.process_save(data)
   end
 end

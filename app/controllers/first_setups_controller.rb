@@ -77,7 +77,7 @@ class FirstSetupsController < ApplicationController
     entries.each do |f|
       canonical_path = f.sub(site_scaffold_folder, '')
       canonical_path.slice!(0) if canonical_path[0] == '/'
-      Thylogale.file_container(canonical_path).write(File.read(f))
+      Thylogale.file_container(canonical_path).write(File.binread(f))
     end
   end
 

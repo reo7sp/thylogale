@@ -21,7 +21,7 @@ module Thylogale
       end
 
       def register
-        Templates.register_template(self)
+        Templates.templates_loader.register_template(self)
       end
 
       private

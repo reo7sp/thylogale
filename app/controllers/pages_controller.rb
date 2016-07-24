@@ -9,7 +9,11 @@ class PagesController < ApplicationController
   end
 
   def raw
-    render plain: @page.data, content_type: Mime::Types.lookup_by_extension(File.extname_without_dot(@page.name))
+    render plain: @page.data, content_type: get_mime_from_file_name(@page.name)
+  end
+
+  def publish
+    @page.publish
   end
 
   def create
@@ -17,7 +21,7 @@ class PagesController < ApplicationController
 
     @page.title.strip!
     @page.root_folder       ||= PageFolder.find_by(id: params[:page_folder_id])
-    @page.template_instance ||= Thylogale::SiteConfigs.templates.first
+    @page.template_instance ||= Thylogale::Templates.templates.first
     @page.name              ||= "#{@page.title.parameterize}.#{@page.template_instance.file_extension}"
     @page.path              = File.join(@page.root_folder.path, @page.name)
 

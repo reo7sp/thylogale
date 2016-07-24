@@ -1,5 +1,5 @@
 class PageFoldersController < ApplicationController
-  before_action :set_page_folder, only: [:show, :search, :update, :destroy]
+  before_action :set_page_folder, only: [:show, :search, :publish, :update, :destroy]
 
   def index
     redirect_to PageFolder.root
