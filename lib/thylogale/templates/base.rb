@@ -12,12 +12,12 @@ module Thylogale
         @on_publish_listeners = []
       end
 
-      def process_save(contents)
-        process(contents, @on_save_listeners)
+      def process_save(page)
+        process(page, @on_save_listeners)
       end
 
-      def process_publish(contents)
-        process(contents, @on_publish_listeners)
+      def process_publish(page)
+        process(page, @on_publish_listeners)
       end
 
       def register
@@ -26,9 +26,9 @@ module Thylogale
 
       private
 
-      def process(contents, listeners)
-        listeners.reduce(contents) do |memo, listener|
-          listener.process(memo)
+      def process(page, listeners)
+        listeners.reduce(page.data) do |memo, listener|
+          listener.process(memo, page)
         end
       end
     end

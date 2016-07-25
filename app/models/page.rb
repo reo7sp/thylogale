@@ -19,7 +19,7 @@ class Page < ActiveRecord::Base
   end
 
   def publish
-    contents = template_instance.process_publish(data)
+    contents = template_instance.process_publish(self)
     file_container = Thylogale.file_container('published', path)
     file_container.write(contents)
   end
@@ -27,6 +27,6 @@ class Page < ActiveRecord::Base
   private
 
   def apply_template_on_save
-    template_instance.process_save(data)
+    self.data = template_instance.process_save(self)
   end
 end

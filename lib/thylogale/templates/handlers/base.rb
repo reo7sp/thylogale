@@ -3,15 +3,19 @@ module Thylogale
     module Handlers
 
       class Base
-        def self.name
-          super.demodulize.underscore
+        def self.handler_name
+          name.demodulize.underscore
         end
 
-        def register(as: self.class.name)
+        def handler_name
+          self.class.handler_name
+        end
+
+        def register(as: handler_name)
           Handlers.register_handler(as, self)
         end
 
-        def self.register(*constructor_args, as: name)
+        def self.register(*constructor_args, as: handler_name)
           new(*constructor_args).register(as: as)
         end
       end

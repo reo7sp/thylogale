@@ -9,7 +9,7 @@ module Thylogale
         @options = options
       end
 
-      def process(contents)
+      def process(contents, *options)
         handler.process(contents, *options)
       end
     end

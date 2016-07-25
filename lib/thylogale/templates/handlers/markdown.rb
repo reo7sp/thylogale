@@ -12,7 +12,7 @@ module Thylogale
           @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
         end
 
-        def process(contents)
+        def process(contents, page)
           @markdown.render(contents)
         end
       end

@@ -6,8 +6,8 @@ module Thylogale
         @proc = proc
       end
 
-      def process(contents)
-        executor = TemplateListenerDSL.new(contents)
+      def process(contents, page)
+        executor = TemplateListenerExecutor.new(contents, page)
         executor.instance_eval(&@proc)
       end
     end

@@ -1,13 +1,7 @@
 module Thylogale
   module Templates
 
-    class TemplateListenerDSL
-      attr_reader :contents
-
-      def initialize(contents)
-        @contents = contents
-      end
-
+    module TemplateListenerDSL
       def make_pipe(*options, &block)
         case options.first
         when Symbol, String
@@ -23,7 +17,7 @@ module Thylogale
       end
 
       def pipe(*options, &block)
-        make_pipe(*options, &block).process(contents)
+        make_pipe(*options, &block).process(contents, page)
       end
     end
 

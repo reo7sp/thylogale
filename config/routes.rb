@@ -16,7 +16,11 @@ Rails.application.routes.draw do
         get 'raw'
       end
 
-      resources :page_assets, except: [:index, :edit, :new], shallow: true
+      resources :page_assets, except: [:index, :edit, :new], shallow: true do
+        member do
+          get 'raw'
+        end
+      end
     end
   end
 end
