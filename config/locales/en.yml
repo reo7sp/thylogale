@@ -82,3 +82,5 @@ en:
   cant_save_asset: "Can't save asset"
   saved: "Saved"
   wasnt_saved: "Was't saved"
+  saving: "Saving"
+  will_autosave: "Will save automatically"
