@@ -13,12 +13,16 @@ module RecordWithFileContainer
     self.class.name.demodulize.underscore.pluralize
   end
 
-  def container_service
-    @container_service ||= Thylogale.file_container(container_service_root, path)
+  def file_container_for(*path)
+    Thylogale.file_container(container_service_root, *path)
+  end
+
+  def file_container
+    @container_service ||= file_container_for(path)
   end
 
   def data
-    @data ||= container_service.read rescue ''
+    @data ||= file_container.read rescue ''
   end
 
   def data=(data)
@@ -34,14 +38,14 @@ module RecordWithFileContainer
   private
 
   def delete_data
-    container_service.destroy
+    file_container.destroy
   end
 
   def move_data
-    Thylogale.file_container(container_service_root, path_was).move(path)
+    file_container_for(path_was).move(path)
   end
 
   def save_data
-    container_service.write(@data)
+    file_container.write(@data)
   end
 end

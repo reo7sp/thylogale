@@ -60,6 +60,10 @@ module Thylogale
       end
     end
 
+    def ls
+      Dir.entries(abs_path).drop(2).map { |it| LocalFileContainer.new(File.join(@path, it), @setup) }
+    end
+
     private
 
     def rm_r_empty(dir)

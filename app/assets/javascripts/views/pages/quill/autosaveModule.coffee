@@ -17,23 +17,15 @@ ajax = (url, opts) ->
 
   deferred
 
-
 sendPage = (page, data) ->
   form = new FormData
   form.append('page[data]', data)
 
-  deferred = $.Deferred()
-
-  ajaxPromise = ajax "/pages/#{page}",
+  ajax "/pages/#{page}",
     method: 'PUT'
     data: form
     contentType: false
     processData: false
-
-  ajaxPromise.done (opts...) -> deferred.resolve(opts...)
-  ajaxPromise.fail (opts...) -> deferred.reject(opts...)
-
-  deferred
 
 updateStatus = (message, type) ->
   allTypes = ['ok', 'error']
@@ -106,8 +98,9 @@ Quill.register 'modules/autosave', class extends Quill.import('core/module')
 
   onTextChange: (delta, oldDelta, source) ->
     @removeSaveTimeout()
-    updateStatus(I18n.t('will_autosave'))
-    @createSaveTimeout() unless @skipNextSave
+    unless @skipNextSave
+      updateStatus(I18n.t('will_autosave_soon'))
+      @createSaveTimeout()
     @skipNextSave = false
 
   removeSaveTimeout: ->

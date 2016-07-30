@@ -23,7 +23,7 @@ module Thylogale
         def process_markdown(contents, page)
           contents.gsub /!\[(.*?)\]\((.*?)\)/ do |match|
             page_asset = save_image($2, page)
-            return match unless page_asset
+            next match unless page_asset
 
             alt = $1
             src = page_asset_path(page_asset)
@@ -34,7 +34,8 @@ module Thylogale
         def process_html(contents, page)
           doc = Nokogiri::HTML(contents)
           doc.xpath('//img').each do |img|
-            img['src'] = page_asset_path(save_image(img['src'], page))
+            page_asset = save_image(img['src'], page)
+            img['src'] = page_asset_path(page_asset) if page_asset
           end
           doc.to_html
         end
@@ -53,8 +54,8 @@ module Thylogale
 
         def save_base64_image(src, page)
           semicolon_index = src.index(';')
-          mime            = data[5..semicolon_index]
-          contents        = Base64.decode64(data.slice(semicolon_index + 8, -1))
+          mime            = src[5...semicolon_index]
+          contents        = Base64.decode64(src[semicolon_index + 8..-1])
           name            = "#{Thylogale.random_string}.#{get_extension(mime)}"
           PageAsset.create!(name: name, mime: mime, data: contents, page: page)
         end

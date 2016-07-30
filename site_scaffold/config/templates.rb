@@ -9,6 +9,7 @@ Thylogale.template 'page' do
     pipe :downgrade_headings
     pipe :markdown
     pipe :template, 'page.html.liquid'
+    pipe :sitemap
   end
 end
 

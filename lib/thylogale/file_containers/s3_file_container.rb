@@ -47,5 +47,9 @@ module Thylogale
       file.open if open
       file
     end
+
+    def ls
+      @bucket.keys(prefix: @object.key).map { |it| S3FileContainer.new(File.join(@path, it), @setup) }
+    end
   end
 end
