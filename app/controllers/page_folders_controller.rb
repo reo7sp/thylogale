@@ -1,16 +1,11 @@
 class PageFoldersController < ApplicationController
-  before_action :set_page_folder, only: [:show, :search, :publish, :update, :destroy]
+  before_action :set_page_folder, only: [:show, :update, :destroy]
 
   def index
     redirect_to PageFolder.root
   end
 
   def show
-  end
-
-  def search
-    # TODO
-    render json: []
   end
 
   def create

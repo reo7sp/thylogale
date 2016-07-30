@@ -20,6 +20,7 @@ gem 'sass-rails'
 gem 'uglifier'
 gem 'autoprefixer-rails'
 gem 'rs_russian', github: 'rs-pro/russian', branch: 'master'
+gem 'pg_search'
 
 gem 'browserify-rails'
 gem 'jquery-rails'

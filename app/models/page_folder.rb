@@ -1,4 +1,6 @@
 class PageFolder < ActiveRecord::Base
+  include PgSearch
+
   has_many :pages, foreign_key: 'root_folder_id', dependent: :destroy
   has_many :subfolders, class_name: 'PageFolder', foreign_key: 'root_folder_id', dependent: :destroy
   belongs_to :root_folder, class_name: 'PageFolder', touch: true, counter_cache: 'subfolders_count'
@@ -9,6 +11,8 @@ class PageFolder < ActiveRecord::Base
   validates_presence_of :root_folder, unless: :is_root?
   validates_presence_of :path
   validates_uniqueness_of :path
+
+  pg_search_scope :search_by_title, against: :title
 
   def is_root?
     id == 1

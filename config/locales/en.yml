@@ -85,3 +85,5 @@ en:
   saving: "Saving"
   will_autosave: "Will save automatically"
   will_autosave_soon: "Will save soon"
+  search_pages_ellps: "Search pages..."
+  not_found: "Not found"

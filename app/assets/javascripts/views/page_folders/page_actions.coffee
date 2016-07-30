@@ -39,3 +39,7 @@ $(document).on 'click', '#create-page-button', ->
 
 $(document).on 'click', '#create-page-folder-button', ->
   create(folder: true, inFolderWithId: $(@).data('in-folder'))
+
+$(document).on 'click', '#goto-page-search-button', ->
+  Turbolinks.visit '/page_search'
+

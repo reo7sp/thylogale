@@ -1,0 +1,9 @@
+<table class="table table-hover page-folders-list">
+  <% if @search_results %>
+      <% @search_results.each do |result| %>
+          <%= render 'results-row', entry: result, type: get_type_of_result(result) %>
+      <% end %>
+  <% else %>
+      <%= render 'results-empty-row' %>
+  <% end %>
+</table>

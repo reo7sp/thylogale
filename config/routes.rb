@@ -7,7 +7,6 @@ Rails.application.routes.draw do
   resources :page_folders, except: [:edit, :new, :create] do
     member do
       post 'subfolders', to: 'page_folders#create'
-      get 'search'
     end
 
     resources :pages, except: [:index, :edit, :new], shallow: true do
@@ -23,4 +22,7 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  get '/page_search', to: 'page_search#index'
+  get '/page_search/:id', to: 'page_search#show'
 end
