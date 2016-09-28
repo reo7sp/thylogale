@@ -13,12 +13,8 @@ module RecordWithFileContainer
     self.class.name.demodulize.underscore.pluralize
   end
 
-  def file_container_for(*path)
-    Thylogale.file_container(container_service_root, *path)
-  end
-
   def file_container
-    @container_service ||= file_container_for(path)
+    raise NotImplementedError
   end
 
   def data
@@ -42,7 +38,7 @@ module RecordWithFileContainer
   end
 
   def move_data
-    file_container_for(path_was).move(path)
+    new_file_container_for(path_was).move(path)
   end
 
   def save_data

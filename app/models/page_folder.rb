@@ -1,4 +1,4 @@
-class PageFolder < ActiveRecord::Base
+class PageFolder < ApplicationRecord
   include PgSearch
 
   has_many :pages, foreign_key: 'root_folder_id', dependent: :destroy

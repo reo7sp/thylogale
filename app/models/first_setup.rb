@@ -1,4 +1,4 @@
-class FirstSetup < ActiveRecord::Base
+class FirstSetup < ApplicationRecord
   after_initialize :initialize_s3, if: "save_choice == 's3'"
 
   validate on: :create do

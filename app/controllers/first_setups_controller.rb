@@ -45,7 +45,7 @@ class FirstSetupsController < ApplicationController
     additional_params = {
         done:           true,
         site_domain:    ENV['SITE_DOMAIN'],
-        save_local_dir: File.join(Thylogale::Locations.sites_default, ENV['SITE_DOMAIN'])
+        save_local_dir: File.join(ENV['SITES_DEFAULT_LOCATION'] || '/var/lib/thylogale/sites', ENV['SITE_DOMAIN'])
     }
     @first_setup.update!(first_setup_params.merge(additional_params))
   end
@@ -77,14 +77,14 @@ class FirstSetupsController < ApplicationController
     entries.each do |f|
       canonical_path = f.sub(site_scaffold_folder, '')
       canonical_path.slice!(0) if canonical_path[0] == '/'
-      Thylogale.file_container(canonical_path).write(File.binread(f))
+      FileContainer.new(canonical_path).write(File.binread(f))
     end
   end
 
   def extract_site
     Zip::File.open(first_setup_params[:import_file]) do |zip|
       zip.each do |f|
-        Thylogale.file_container(f.name).write(f.get_input_stream.read)
+        FileContainer.new(f.name).write(f.get_input_stream.read)
       end
     end
   end
