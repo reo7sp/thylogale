@@ -1,4 +1,4 @@
-module RecordWithFileContainer
+module RecordWithFile
   extend ActiveSupport::Concern
 
   included do
@@ -9,16 +9,20 @@ module RecordWithFileContainer
     after_save :save_data, if: :data_changed?
   end
 
-  def container_service_root
-    self.class.name.demodulize.underscore.pluralize
+  def root_abs_path
+    PageFolder.root.abs_path
   end
 
-  def file_container
-    raise NotImplementedError
+  def abs_path
+    File.join(root_abs_path, path)
+  end
+
+  def abs_path_was
+    File.join(root_abs_path, path_was)
   end
 
   def data
-    @data ||= file_container.read rescue ''
+    @data ||= File.binread(abs_path) rescue ''
   end
 
   def data=(data)
@@ -34,14 +38,14 @@ module RecordWithFileContainer
   private
 
   def delete_data
-    file_container.destroy
+    File.delete(abs_path)
   end
 
   def move_data
-    new_file_container_for(path_was).move(path)
+    File.new(abs_path_was).move(abs_path)
   end
 
   def save_data
-    file_container.write(@data)
+    File.write(abs_path, @data)
   end
 end

@@ -6,7 +6,7 @@
   <br>
 
   <%= form_for @first_setup, url: init_path do |f| %>
-      <% %w(import_choice save_choice email_choice admin_user).each do |p| %>
+      <% %w(import_choice email_choice admin_user).each do |p| %>
           <%= render p, f: f %>
           <br>
       <% end %>

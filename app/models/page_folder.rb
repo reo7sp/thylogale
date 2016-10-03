@@ -18,6 +18,14 @@ class PageFolder < ApplicationRecord
     id == 1
   end
 
+  def abs_path
+    if is_root?
+      File.join(FirstSetup.instance.save_local_dir, 'source')
+    else
+      File.join(FirstSetup.instance.save_local_dir, 'source', path)
+    end
+  end
+
   def self.root
     first
   end

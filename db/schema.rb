@@ -10,16 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160722165815) do
+ActiveRecord::Schema.define(version: 20161001213211) do
 
   create_table "first_setups", force: :cascade do |t|
     t.boolean  "done",                  default: false
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
-    t.string   "save_choice"
-    t.string   "save_s3_access_key"
-    t.string   "save_s3_secret"
-    t.string   "save_s3_region"
     t.string   "email_choice"
     t.string   "email_mailgun_api_key"
     t.string   "email_mailgun_domain"
