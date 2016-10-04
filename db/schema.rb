@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161001213211) do
+ActiveRecord::Schema.define(version: 20161003175850) do
 
   create_table "first_setups", force: :cascade do |t|
     t.boolean  "done",                  default: false
@@ -47,7 +47,6 @@ ActiveRecord::Schema.define(version: 20161001213211) do
   create_table "pages", force: :cascade do |t|
     t.string   "title"
     t.string   "name"
-    t.string   "template"
     t.integer  "root_folder_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false

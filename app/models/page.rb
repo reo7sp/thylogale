@@ -1,5 +1,6 @@
 class Page < ApplicationRecord
   include RecordWithFile
+  include RecordWithFileFrontmatter
   include PgSearch
   include ThylogaleUtils
 
@@ -10,10 +11,15 @@ class Page < ApplicationRecord
   validates_uniqueness_of :path
 
   before_save :download_external_images, if: :data_changed?
+  before_create :cache_title
 
   pg_search_scope :search_by_title, against: :title
 
   private
+
+  def cache_title
+    self.title = metadata[:title]
+  end
 
   def download_external_images
     self.data = data.gsub /!\[(.*?)\]\((.*?)\)/ do |match|

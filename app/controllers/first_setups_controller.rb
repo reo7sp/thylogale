@@ -69,12 +69,12 @@ class FirstSetupsController < ApplicationController
 
   def add_all_erb_to_page_database
     root_path = File.join(@first_setup.save_local_dir, 'source')
-    glob = File.join(root_path, '**', '*.erb')
+    glob = File.join(root_path, '**', '*.html.erb')
     entries = Dir.glob(glob)
     entries.each do |abs_path|
       canonical_path = abs_path[root_path.length+1..-1]
 
-      name = File.basename(canonical_path).split('.')[0..-3].join('.')
+      name = File.basename(canonical_path, '.html.erb')
 
       dirname = File.dirname(canonical_path)
       root_folder = (dirname == '.') ? PageFolder.root : PageFolder.where(path: dirname)

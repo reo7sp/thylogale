@@ -1,20 +1,32 @@
 module SiteBuilder
   class << self
-    def set_file_metadata(path, metadata, append: true, app: new_middleman)
-      old_metadata, text = Middleman::Util::Data::parse(path, app.config[:frontmatter_delims])
-      metadata = old_metadata.merge(metadata) if append
-      new_file_contents = metadata.to_yaml + app.config[:frontmatter_delims][:yaml][-1] + "\n" + text
-      File.write(path, new_file_contents)
-    end
-
-    def get_file_metadata(path, app: new_middleman)
-      Middleman::Util::Data::parse(path, app.config[:frontmatter_delims]).first
-    end
+    FileMetadata = Struct.new(:metadata, :data)
 
     def build(app: new_middleman)
       builder = Middleman::Builder.new(app)
       builder.run!
     end
+
+    def parse_file(path, app: new_middleman)
+      source_file    = Middleman::SourceFile.new(nil, path, nil, {}, nil)
+      metadata, data = Middleman::Util::Data::parse(source_file, app.config[:frontmatter_delims])
+      FileMetadata.new(metadata, data)
+    end
+
+    def update_file(path, metadata: nil, data: nil, append_metadata: true, app: new_middleman)
+      if metadata.nil? or data.nil? or append_metadata
+        old_file_contents = parse_file(path)
+        metadata          = old_file_contents.metadata.merge(metadata) if append_metadata and not metadata.nil?
+
+        metadata ||= old_file_contents.metadata
+        data     ||= old_file_contents.data
+      end
+
+      new_file_contents = metadata.to_yaml + app.config[:frontmatter_delims][:yaml][-1] + "\n" + data
+      File.write(path, new_file_contents)
+    end
+
+    private
 
     def new_middleman(mode: :build)
       ENV['MM_ROOT'] ||= FirstSetup.instance.save_local_dir

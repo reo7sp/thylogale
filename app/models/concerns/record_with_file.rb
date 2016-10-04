@@ -2,7 +2,7 @@ module RecordWithFile
   extend ActiveSupport::Concern
 
   included do
-    attribute :data, :string
+    define_attribute_method 'data'
 
     after_destroy :delete_data
     after_update :move_data, if: :path_changed?
