@@ -69,23 +69,23 @@ class FirstSetupsController < ApplicationController
 
   def add_all_erb_to_page_database
     root_path = File.join(@first_setup.save_local_dir, 'source')
-    glob = File.join(root_path, '**', '*.html.erb')
+    glob = File.join(root_path, '**', '*.html.md.erb')
     entries = Dir.glob(glob)
     entries.each do |abs_path|
       canonical_path = abs_path[root_path.length+1..-1]
 
-      name = File.basename(canonical_path, '.html.erb')
+      name = File.basename(canonical_path, '.html.md.erb')
 
       dirname = File.dirname(canonical_path)
       root_folder = (dirname == '.') ? PageFolder.root : PageFolder.where(path: dirname)
       unless root_folder
         path_parts = dirname.split('/')
         memo = path_parts.each_with_object({path: '', last_dir: PageFolder.root}) do |path_part, memo|
-          memo.path << '/' unless memo.path.empty?
-          memo.path << path_part
-          memo.last_dir = PageFolder.find_or_create_by!(path: memo.path, root_folder: memo.last_dir)
+          memo[:path] << '/' unless memo.path.empty?
+          memo[:path] << path_part
+          memo[:last_dir] = PageFolder.find_or_create_by!(path: memo.path, root_folder: memo[:last_dir])
         end
-        root_folder = memo.last_dir
+        root_folder = memo[:last_dir]
       end
 
       Page.create!(name: name, root_folder: root_folder, path: canonical_path)
