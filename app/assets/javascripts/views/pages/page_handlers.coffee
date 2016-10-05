@@ -1,8 +1,7 @@
 _ = require 'lodash'
 
 handlerClasses = [
-  require './page_handlers/md_handler.coffee'
-  require './page_handlers/md_liquid_handler.coffee'
+  require './page_handlers/html_md_erb_handler.coffee'
 ]
 
 handlerInstances = _.map(handlerClasses, (c) -> new c)

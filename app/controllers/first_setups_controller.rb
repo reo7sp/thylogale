@@ -74,7 +74,7 @@ class FirstSetupsController < ApplicationController
     entries.each do |abs_path|
       canonical_path = abs_path[root_path.length+1..-1]
 
-      name = File.basename(canonical_path, '.html.md.erb')
+      name = File.basename(canonical_path)
 
       dirname = File.dirname(canonical_path)
       root_folder = (dirname == '.') ? PageFolder.root : PageFolder.where(path: dirname)

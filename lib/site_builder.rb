@@ -3,6 +3,7 @@ module SiteBuilder
     FileMetadata = Struct.new(:metadata, :data)
 
     def build(app: new_middleman)
+      load_site_gemfile
       builder = Middleman::Builder.new(app)
       builder.run!
     end
@@ -22,11 +23,16 @@ module SiteBuilder
         data     ||= old_file_contents.data
       end
 
-      new_file_contents = metadata.to_yaml + app.config[:frontmatter_delims][:yaml][-1] + "\n" + data
+      new_file_contents = metadata.to_yaml + app.config[:frontmatter_delims][:yaml][0][-1] + "\n" + data
       File.write(path, new_file_contents)
     end
 
     private
+
+    def load_site_gemfile
+      gemfile = File.join(FirstSetup.instance.save_local_dir, 'Gemfile')
+      eval(File.read(gemfile), binding)
+    end
 
     def new_middleman(mode: :build)
       ENV['MM_ROOT'] ||= FirstSetup.instance.save_local_dir

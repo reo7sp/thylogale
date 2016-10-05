@@ -16,11 +16,11 @@
 
     <div class="page-folders-actions__separator"></div>
 
-    <button class="page-folders-actions__item btn btn-success" id="create-page-button" data-in-folder="<%= @page_folder.id %>">
+    <button class="page-folders-actions__item btn btn-success" id="create-page-button" data-folder="<%= @page_folder.id %>">
       <%= glyphicon 'plus'%> <%=t :new_page %>
     </button>
 
-    <button class="page-folders-actions__item btn btn-default" id="create-page-folder-button" data-in-folder="<%= @page_folder.id %>">
+    <button class="page-folders-actions__item btn btn-default" id="create-page-folder-button" data-folder="<%= @page_folder.id %>">
       <%=t :new_folder %>
     </button>
   </div>

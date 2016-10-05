@@ -35,10 +35,10 @@ create = ({folder, inFolderWithId}) ->
 
 
 $(document).on 'click', '#create-page-button', ->
-  create(folder: false, inFolderWithId: $(@).data('in-folder'))
+  create(folder: false, inFolderWithId: $(@).data('folder'))
 
 $(document).on 'click', '#create-page-folder-button', ->
-  create(folder: true, inFolderWithId: $(@).data('in-folder'))
+  create(folder: true, inFolderWithId: $(@).data('folder'))
 
 $(document).on 'click', '#goto-page-search-button', ->
   Turbolinks.visit '/page_search'

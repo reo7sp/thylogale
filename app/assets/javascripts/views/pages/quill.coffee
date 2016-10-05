@@ -7,21 +7,17 @@ isPageView = ->
   $(document.body).data('controller') == 'pages'
 
 getPageHandler = (pageName) ->
-  pageNameExtensions = []
-  _(pageName).split('.').reduceRight (acc, it) ->
-    acc = "#{it}.#{acc}" if pageNameExtensions.length > 0
-    pageNameExtensions.push(acc)
-
-  pageHandlerName = _(pageNameExtensions).find (it) -> pageHandlers[it]?
-  pageHandler = pageHandlers[pageHandlerName]
+  console.log pageHandlers
+  _(pageHandlers).find (it) ->
+    fileExt = (if it.fileExtension[0] != '.' then '.' else '') + it.fileExtension
+    pageName.endsWith(fileExt)
 
 
 document.addEventListener 'turbolinks:load', ->
   if isPageView()
     $editorEl = $('#page-editor')
-    pageId = $editorEl.data('page')
-    pageName = $editorEl.data('page-name')
-    pageHandler = getPageHandler(pageName)
+    pageData = $editorEl.data('page')
+    pageHandler = getPageHandler(pageData.name)
 
     loadTextToEditor($editorEl, pageHandler)
 
@@ -30,5 +26,5 @@ document.addEventListener 'turbolinks:load', ->
       modules:
         toolbar: '#page-toolbar'
         autosave:
-          pageId: pageId
+          pageId: pageData.id
           pageHandler: pageHandler

@@ -20,3 +20,5 @@
 #
 #= require_directory .
 #= require_directory ./views
+
+require('core-js/shim')

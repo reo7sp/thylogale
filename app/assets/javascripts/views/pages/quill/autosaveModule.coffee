@@ -1,5 +1,6 @@
 _ = require 'lodash'
 
+# net
 ajax = (url, opts) ->
   deferred = $.Deferred()
 
@@ -27,6 +28,8 @@ sendPage = (page, data) ->
     contentType: false
     processData: false
 
+
+# ui
 updateStatus = (message, type) ->
   allTypes = ['ok', 'error']
 
@@ -49,6 +52,8 @@ setSavingModelProgress = (percent) ->
   $el.css('width', "#{percent}%")
   $el.html("#{percent}%")
 
+
+# saving controller
 savePage = (page, data, $quillRoot, pageHandler, skipSaveFn) ->
   onDone = ->
     updateStatus(I18n.t('saved'), 'ok')
@@ -78,7 +83,7 @@ savePage = (page, data, $quillRoot, pageHandler, skipSaveFn) ->
       setSavingModelProgress(100)
       ajax "/pages/#{page}/raw"
         .done (data) ->
-          $quillRoot.html(pageHandler.handle(data))
+          $quillRoot.html(pageHandler.handle(data).replace(/>\s+</g, '><'))
 
         .always ->
           elapsedTime = Date.now() - startTime
@@ -86,6 +91,7 @@ savePage = (page, data, $quillRoot, pageHandler, skipSaveFn) ->
           setTimeout((-> skipSaveFn()), 0)
 
 
+# quill extension
 Quill.register 'modules/autosave', class extends Quill.import('core/module')
   skipNextSave: true
 
