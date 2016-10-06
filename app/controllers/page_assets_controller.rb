@@ -1,15 +1,15 @@
 class PageAssetsController < ApplicationController
-  before_action :set_asset, only: [:show, :raw, :update, :destroy]
+  include ThylogaleUtils
+
+  before_action :set_asset, only: [:show, :update, :destroy]
 
   def show
     respond_to do |format|
       format.json
-      format.all { redirect_to raw_page_asset_path }
+      format.all do
+        render plain: @page_asset.data, content_type: get_mime_from_file_name(@page_asset.name)
+      end
     end
-  end
-
-  def raw
-    render plain: @page_asset.data, content_type: get_mime_from_file_name(@page_asset.name)
   end
 
   def create
@@ -46,17 +46,5 @@ class PageAssetsController < ApplicationController
 
   def page_asset_params
     params.require(:page_asset).permit(:name, :page_id, :data)
-  end
-
-  def get_mime(extension)
-    Mime::Type.lookup_by_extension(extension)
-  end
-
-  def get_mime_from_file_name(file_name)
-    get_mime(File.extname_without_dot(file_name))
-  end
-
-  def get_extension(mime)
-    Mime::Type.lookup(mime).to_sym
   end
 end

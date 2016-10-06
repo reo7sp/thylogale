@@ -9,9 +9,18 @@ module.exports = class
     marked(markdown)
 
   revert: (html) ->
-    markdownChars = ['\\', '*', '_', '{', '}', '[', ']', '(', ')', '+', '-', '.', '!', '`', '#']
-    for c in markdownChars
-      html = html.replace(new RegExp(_.escapeRegExp(c), 'g'), '\\' + c)
+    markdownEscapeChars = ['\\', '*', '_', '{', '}', '[', ']', '(', ')', '+', '-', '.', '!', '`', '#']
+    htmlEscaped = ''
+    isInTag = false
+    for c in html
+      if c == '<'
+        isInTag = true
+      else if c == '>'
+        isInTag = false
+      else if not isInTag and markdownEscapeChars.includes(c)
+        htmlEscaped += '\\'
+      htmlEscaped += c
+    html = htmlEscaped
 
     randAmpEscapeStr = '\\raes'
     randAmpEscapeStr += Math.random().toString(36).substr(2, 4) while html.includes(randAmpEscapeStr)

@@ -15,6 +15,12 @@ class Page < ApplicationRecord
 
   pg_search_scope :search_by_title, against: :title
 
+  def title=(value)
+    super
+    metadata_will_change!
+    metadata[:title] = title
+  end
+
   private
 
   def cache_title
@@ -23,11 +29,12 @@ class Page < ApplicationRecord
 
   def download_external_images
     self.data = data.gsub /!\[(.*?)\]\((.*?)\)/ do |match|
-      page_asset = PageAsset.create_from_uri($2, page)
-      next match unless page_asset
+      next match if $2.start_with?('/page_assets/')
 
+      page_asset = PageAsset.create_from_uri!($2, page: self)
+      next match unless page_asset
       alt = $1
-      src = "/page_assets/#{page_asset.id}/raw"
+      src = "/page_assets/#{page_asset.page_id}/#{page_asset.name}"
       "![#{alt}](#{src})"
     end
   end

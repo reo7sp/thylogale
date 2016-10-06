@@ -46,6 +46,7 @@ module RecordWithFile
   end
 
   def save_data
-    File.write(abs_path, @data)
+    FileUtils.mkdir_p(File.dirname(abs_path))
+    File.binwrite(abs_path, @data)
   end
 end

@@ -16,12 +16,11 @@ Rails.application.routes.draw do
       end
 
       resources :page_assets, except: [:index, :edit, :new], shallow: true do
-        member do
-          get 'raw'
-        end
       end
     end
   end
+
+  get '/page_assets/:page_id/:id', to: 'page_assets#show'
 
   get '/page_search', to: 'page_search#index'
   get '/page_search/:id', to: 'page_search#show'
