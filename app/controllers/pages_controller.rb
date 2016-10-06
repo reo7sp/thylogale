@@ -13,7 +13,7 @@ class PagesController < ApplicationController
   end
 
   def publish
-    @page.publish
+    Page.publish
   end
 
   def create

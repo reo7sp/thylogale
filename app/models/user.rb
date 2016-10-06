@@ -9,7 +9,9 @@ class User < ApplicationRecord
     id == 1
   end
 
-  def self.admin
-    first
+  class << self
+    def admin
+      first
+    end
   end
 end

@@ -21,6 +21,24 @@ class Page < ApplicationRecord
     metadata[:title] = title
   end
 
+  def cleanup_assets
+    found_asset_ids = []
+    data.match /!\[(.*?)\]\((.*?)\)/ do |match|
+      if $2.start_with?('/page_assets/')
+        asset_name = $2.rpartition('/').last
+        asset_id = asset_name.partition('.').first.to_i
+        found_asset_ids << asset_id
+      end
+    end
+
+    unused_assets = []
+    PageAsset.where(page: self).find_each do |asset|
+      unused_assets << asset unless asset.id.in?(found_asset_ids)
+    end
+
+    unused_assets.each(&:destroy!)
+  end
+
   private
 
   def cache_title
@@ -37,5 +55,14 @@ class Page < ApplicationRecord
       src = "/page_assets/#{page_asset.page_id}/#{page_asset.name}"
       "![#{alt}](#{src})"
     end
+  end
+
+  class << self
+
+    def publish
+      SiteBuilder.build
+      Page.find_each(&:cleanup_assets)
+    end
+
   end
 end

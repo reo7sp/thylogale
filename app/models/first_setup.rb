@@ -8,7 +8,9 @@ class FirstSetup < ApplicationRecord
 
   attr_accessor :import_choice, :import_file
 
-  def self.instance
-    first_or_create!
+  class << self
+    def instance
+      first_or_create!
+    end
   end
 end

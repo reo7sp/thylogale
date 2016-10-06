@@ -26,7 +26,9 @@ class PageFolder < ApplicationRecord
     end
   end
 
-  def self.root
-    first
+  class << self
+    def root
+      first
+    end
   end
 end

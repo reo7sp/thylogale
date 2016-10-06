@@ -31,7 +31,7 @@ module SiteBuilder
 
     def load_site_gemfile
       gemfile = File.join(FirstSetup.instance.save_local_dir, 'Gemfile')
-      eval(File.read(gemfile), binding)
+      eval(File.read(gemfile))
     end
 
     def new_middleman(mode: :build)
