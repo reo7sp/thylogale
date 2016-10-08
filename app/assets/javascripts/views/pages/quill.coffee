@@ -1,7 +1,7 @@
-require './quill/autosaveModule.coffee'
+require './quill/autosave_module.coffee'
 
 pageHandlers = require './page_handlers.coffee'
-loadTextToEditor = require './quill/loadTextToEditor.coffee'
+loadTextToEditor = require './quill/load_text_to_editor.coffee'
 
 isPageView = ->
   $(document.body).data('controller') == 'pages'
