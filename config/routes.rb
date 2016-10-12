@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       member do
         get 'preview'
         get 'raw'
+        post 'publish'
       end
 
       resources :page_assets, except: [:index, :edit, :new], shallow: true do

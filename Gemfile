@@ -13,22 +13,11 @@ gem 'rubyzip'
 gem 'middleman', github: 'middleman/middleman'
 gem 'git'
 
-gem 'coffee-rails'
-gem 'sass-rails'
-gem 'uglifier'
 gem 'autoprefixer-rails'
 gem 'rs_russian', github: 'rs-pro/russian'
 gem 'pg_search'
 
-gem 'browserify-rails'
-gem 'jquery-rails'
-gem 'bootstrap-sass', '~> 3'
-gem 'turbolinks'
 gem 'i18n-js', '>= 3.0.0.rc11'
-
-source 'https://rails-assets.org' do
-  gem 'rails-assets-sweetalert'
-end
 
 group :development, :test do
   gem 'byebug'

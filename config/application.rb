@@ -20,6 +20,9 @@ module Thylogale
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :ru
 
-    config.autoload_paths += Dir["#{config.root}/lib/**/"]
+    config.autoload_paths << "#{config.root}/lib"
+
+    config.assets.enabled = false
+    config.middleware.use I18n::JS::Middleware
   end
 end
