@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title><%= yield(:title) %></title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <%= stylesheet_link_tag    '/assets/app', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag '/assets/app', 'data-turbolinks-track' => true, 'defer' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body data-controller="<%= params[:controller] %>">
+  <head>
+    <title><%= yield(:title) %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<% flash.each do |k, v| %>
-  <div class="flash flash_<%= k %>"><%= v %></div>
-<% end %>
+    <% data_turbolinks_track = Rails.env.development? ? 'reload' : false %>
+    <%= stylesheet_link_tag 'app', media: 'all', 'data-turbolinks-track' => data_turbolinks_track %>
 
-<%= yield %>
+    <%= csrf_meta_tags %>
+  </head>
 
-</body>
+  <body data-controller="<%= params[:controller] %>">
+    <% flash.each do |k, v| %>
+        <div class="flash flash_<%= k %>"><%= v %></div>
+    <% end %>
+
+    <%= yield %>
+
+    <%= javascript_include_tag 'app',
+                               'data-turbolinks-track' => data_turbolinks_track %>
+    <%= javascript_include_tag 'translations',
+                               'data-turbolinks-track' => data_turbolinks_track %>
+  </body>
 </html>

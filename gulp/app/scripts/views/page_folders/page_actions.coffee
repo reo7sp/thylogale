@@ -8,6 +8,8 @@ create = ({folder, inFolderWithId}) ->
   swalOpts =
     title: I18n.t "new_#{if folder then 'folder' else 'page'}"
     inputPlaceholder: I18n.t "enter_new_#{if folder then 'folder' else 'page'}"
+    cancelButtonText: I18n.t 'cancel'
+    confirmButtonText: I18n.t 'ok'
     type: 'input'
     showCancelButton: true
     allowOutsideClick: true

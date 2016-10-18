@@ -1,6 +1,8 @@
 module RecordWithFileFrontmatter
   extend ActiveSupport::Concern
 
+  # this concern assumes that you has already included RecordWithFile concern
+
   included do
     @metadata_accessors_was_defined = false
 
@@ -19,14 +21,16 @@ module RecordWithFileFrontmatter
   end
 
   def respond_to_missing?(method, *)
-    metadata.key?(method.to_s.delete('=')) ? true : super
+    respond_to_metadata_accessor?(method) ? true : super
   end
 
   private
 
   def save_data
-    FileUtils.mkdir_p(File.dirname(abs_path))
-    SiteBuilder.update_file(abs_path, metadata: metadata, data: data, append_metadata: false)
+    run_callbacks :data_save do
+      FileUtils.mkdir_p(File.dirname(abs_path))
+      File.binwrite(abs_path, @data)
+    end
   end
 
   def define_metadata_accessors
@@ -48,12 +52,19 @@ module RecordWithFileFrontmatter
   end
 
   def method_missing(method, *args)
-    if not @metadata_accessors_was_defined and metadata.key?(method.to_s.delete('='))
+    if name? and not @metadata_accessors_was_defined and metadata.key?(method.to_s.delete('='))
       define_metadata_accessors
       send(method, *args)
     else
       super
     end
+  end
+
+  def respond_to_metadata_accessor?(accessor)
+    return false unless @metadata_accessors_was_defined
+    metadata.key?(accessor.to_s.delete('='))
+  rescue
+    false
   end
 
 end

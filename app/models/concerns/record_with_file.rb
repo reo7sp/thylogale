@@ -3,6 +3,7 @@ module RecordWithFile
 
   included do
     define_attribute_method 'data'
+    define_model_callbacks :data_save
 
     after_destroy :delete_data
     after_update :move_data, if: :path_changed?
@@ -46,7 +47,9 @@ module RecordWithFile
   end
 
   def save_data
-    FileUtils.mkdir_p(File.dirname(abs_path))
-    File.binwrite(abs_path, @data)
+    run_callbacks :data_save do
+      FileUtils.mkdir_p(File.dirname(abs_path))
+      File.binwrite(abs_path, @data)
+    end
   end
 end

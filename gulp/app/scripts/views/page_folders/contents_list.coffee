@@ -1,5 +1,6 @@
 $ = require 'jquery'
 Turbolinks = require 'turbolinks'
+I18n = require 'i18n-js'
 
 
 visitEntry = (href) ->

@@ -7,19 +7,15 @@ class Page < ApplicationRecord
   belongs_to :root_folder, class_name: 'PageFolder', touch: true, counter_cache: true
   has_many :page_assets, dependent: :destroy
 
-  validates_presence_of :name, :root_folder, :path
+  validates_presence_of :name, :title, :root_folder, :path
   validates_uniqueness_of :path
 
-  before_save :download_external_images, if: :data_changed?
-  before_create :cache_title
+  before_validation :cache_title_from_metadata, unless: :title?
+  before_data_save :cache_title_from_metadata, unless: :title_changed?
+  before_save :update_title_in_metadata, if: :title_changed?, prepend: true
+  before_data_save :download_external_images, if: :data_changed?
 
   pg_search_scope :search_by_title, against: :title
-
-  def title=(value)
-    super
-    metadata_will_change!
-    metadata[:title] = title
-  end
 
   def cleanup_assets
     found_asset_ids = []
@@ -41,8 +37,12 @@ class Page < ApplicationRecord
 
   private
 
-  def cache_title
+  def cache_title_from_metadata
     self.title = metadata[:title]
+  end
+
+  def update_title_in_metadata
+    metadata[:title] = title
   end
 
   def download_external_images

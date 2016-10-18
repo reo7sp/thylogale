@@ -21,8 +21,7 @@ class PagesController < ApplicationController
 
     @page.title.strip!
     @page.root_folder       ||= PageFolder.find_by(id: params[:page_folder_id])
-    @page.template_instance ||= Thylogale::Templates.templates.first
-    @page.name              ||= "#{@page.title.parameterize}.#{@page.template_instance.file_extension}"
+    @page.name              ||= "#{@page.title.parameterize}.html.md.erb"
     @page.path              = File.join(@page.root_folder.path, @page.name)
 
     if @page.save
