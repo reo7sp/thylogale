@@ -1,9 +1,8 @@
 $ = require 'jquery'
 _ = require 'lodash'
-Turbolinks = require 'turbolinks'
 
 
-module.exports = (url, opts) ->
+module.exports = (url, opts = {}) ->
   promise = $.Deferred()
 
   ajaxPromise = $.ajax url, _.assign opts,
@@ -15,7 +14,7 @@ module.exports = (url, opts) ->
           promise.notify(percent)
       xhr
 
-  ajaxPromise.done (opts...) -> promise.resolve(opts...)
-  ajaxPromise.fail (opts...) -> promise.reject(opts...)
+  ajaxPromise.done -> promise.resolve(arguments...)
+  ajaxPromise.fail -> promise.reject(arguments...)
 
   promise

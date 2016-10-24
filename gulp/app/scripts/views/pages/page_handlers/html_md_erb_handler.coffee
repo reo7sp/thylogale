@@ -6,8 +6,31 @@ toMarkdown = require 'to-markdown'
 module.exports = class
   fileExtension: 'html.md.erb'
 
+  markedOptions:
+    gfm: true
+
+  toMarkdownOptions:
+    gfm: true
+    converters: [
+      {
+        filter: 's'
+        replacement: (content) -> "<s>#{content}</s>"
+      }
+      {
+        filter: (node) -> node.classList.contains('ql-custom-erb')
+        replacement: (content) -> "<%#{content}%>"
+      }
+      {
+        filter: (node) -> node.classList.length > 0 or node.style.length > 0
+        replacement: (content, node) -> node.outerHTML
+      }
+    ]
+
   handle: (markdown) ->
-    marked(markdown).replace(/>\s+</g, '><')
+    markdown = markdown.replace(/<%(.+?)%>/g, '<span class="ql-custom-erb">$1</span>')
+
+    marked(markdown, @markedOptions)
+      .replace(/>\s+</g, '><')
 
   revert: (html) ->
     markdownEscapeChars = ['\\', '*', '_', '{', '}', '[', ']', '(', ')', '+', '-', '.', '!', '`', '#']
@@ -27,6 +50,6 @@ module.exports = class
     randAmpEscapeStr += Math.random().toString(36).substr(2, 4) while html.includes(randAmpEscapeStr)
     html = html.replace(/&(.+?);/g, "&#{randAmpEscapeStr}$1;")
 
-    result = toMarkdown(html, gfm: true)
-    result = result.replace(new RegExp(_.escapeRegExp(randAmpEscapeStr), 'g'), '')
-    result
+    toMarkdown(html, @toMarkdownOptions)
+      .replace(new RegExp(_.escapeRegExp(randAmpEscapeStr), 'g'), '')
+      .replace(/<span class="ql-custom-erb">(.+?)<\/span>/g, '<%$1%>')

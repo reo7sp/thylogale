@@ -39,6 +39,25 @@
 .page-editor > .ql-editor > *
   margin-bottom: 1rem
 
+.ql-custom-erb
+  &::before
+    content: '<%'
+    color: red
+  &::after
+    content: '%>'
+    color: red
+
+  color: gray
+  border: 2px dotted #f77
+  padding: 2px 8px
+  background-color: white
+  font-family: monospace
+  font-size: medium
+  font-style: normal
+  font-variant: normal
+  font-weight: normal
+  text-decoration: none
+
 .saving-modal
   position: fixed
   top: 0

@@ -2,9 +2,10 @@ $ = require 'jquery'
 _ = require 'lodash'
 Quill = require 'quill'
 
-require './quill/autosave_module.coffee'
 pageHandlers = require './page_handlers.coffee'
-loadTextToEditor = require './quill/load_text_to_editor.coffee'
+
+require './quill/formats/custom_class.coffee'
+require './quill/modules/autosave.coffee'
 
 
 isPageView = ->
@@ -22,7 +23,10 @@ document.addEventListener 'turbolinks:load', ->
     pageData = $editorEl.data('page')
     pageHandler = getPageHandler(pageData.name)
 
-    loadTextToEditor($editorEl, pageHandler)
+    $content = $($editorEl.data('content-in'))
+    markdown = _.unescape($content.text())
+    html = pageHandler.handle(markdown)
+    $editorEl.html(html)
 
     quill = new Quill $editorEl[0],
       theme: 'snow'
@@ -31,18 +35,29 @@ document.addEventListener 'turbolinks:load', ->
           ['bold', 'italic', 'underline', 'strike']
           [{'script': 'sub'}, {'script': 'super'}]
           [{'color': []}, {'background': []}]
-
           [{'header': [1, 2, 3, 4, 5, 6, false]}]
           [{'align': []}]
-
           [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}]
           ['link', 'image', 'blockquote', 'code-block']
-
           [{'font': []}]
           [{'size': ['small', false, 'large', 'huge']}]
-
           ['clean']
         ]
         autosave:
           pageId: pageData.id
           pageHandler: pageHandler
+
+    toolbarModule = quill.getModule('toolbar')
+    $toolbar = $(toolbarModule.container)
+
+    $toolbarErbButton = $ """
+        <span class="ql-formats">
+          <button type="button" class="ql-erb">
+            <span style="font-weight: 900; font-family: Verdana; font-size: 1.15rem; letter-spacing: -4px; line-height: 16px; margin-left: -6px; vertical-align: top">&lt;%</span>
+          </button>
+        </span>
+    """
+    $toolbarErbButton.click ->
+      quill.format('custom', 'erb')
+    $toolbarFontButton = $toolbar.find('.ql-font').parent()
+    $toolbarErbButton.insertBefore($toolbarFontButton)
