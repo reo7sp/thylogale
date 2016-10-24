@@ -52,4 +52,4 @@ module.exports = class
 
     toMarkdown(html, @toMarkdownOptions)
       .replace(new RegExp(_.escapeRegExp(randAmpEscapeStr), 'g'), '')
-      .replace(/<span class="ql-custom-erb">(.+?)<\/span>/g, '<%$1%>')
+      .replace(/<span .*?class="ql-custom-erb".*?>(.*?)<\/span>/g, '<%$1%>')
