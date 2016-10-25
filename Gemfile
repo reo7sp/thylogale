@@ -10,10 +10,9 @@ gem 'jbuilder'
 gem 'bcrypt'
 gem 'mailgun_rails'
 gem 'rubyzip'
-gem 'middleman', github: 'middleman/middleman'
+gem 'middleman-core', github: 'middleman/middleman'
 gem 'git'
 
-gem 'autoprefixer-rails'
 gem 'rs_russian', github: 'rs-pro/russian'
 gem 'pg_search'
 

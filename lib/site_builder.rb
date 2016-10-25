@@ -3,7 +3,7 @@ module SiteBuilder
     FileMetadata = Struct.new(:metadata, :data)
 
     def build(app: new_middleman)
-      load_site_gemfile
+      load_site_gemfile unless @gemfile_loaded
       builder = Middleman::Builder.new(app)
       builder.run!
     end
@@ -31,7 +31,11 @@ module SiteBuilder
 
     def load_site_gemfile
       gemfile = File.join(FirstSetup.instance.save_local_dir, 'Gemfile')
-      eval(File.read(gemfile))
+      lockfile = gemfile + '.lock'
+      definition = Bundler::Definition.build(gemfile, lockfile, {})
+      runtime = Bundler::Runtime.new(FirstSetup.instance.save_local_dir, definition)
+      runtime.require
+      @gemfile_loaded = true
     end
 
     def new_middleman(mode: :build)
