@@ -11,6 +11,7 @@ gem 'bcrypt'
 gem 'mailgun_rails'
 gem 'rubyzip'
 gem 'middleman-core', github: 'middleman/middleman'
+gem 'pandoc-ruby'
 gem 'git'
 
 gem 'rs_russian', github: 'rs-pro/russian'

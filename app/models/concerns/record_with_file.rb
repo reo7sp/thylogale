@@ -39,7 +39,7 @@ module RecordWithFile
   private
 
   def delete_data
-    File.delete(abs_path)
+    File.delete(abs_path) if File.exist?(abs_path)
   end
 
   def move_data

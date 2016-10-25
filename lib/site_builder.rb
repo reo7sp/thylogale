@@ -1,11 +1,27 @@
 module SiteBuilder
-  class << self
-    FileMetadata = Struct.new(:metadata, :data)
+  class FileMetadata < Struct.new(:metadata, :data)
+  end
 
-    def build(app: new_middleman)
-      load_site_gemfile unless @gemfile_loaded
-      builder = Middleman::Builder.new(app)
-      builder.run!
+  class BuildError < StandardError
+    attr_reader :file
+
+    def initialize(message, file)
+      super(message)
+      @file = file
+    end
+  end
+
+  class << self
+    def build
+      Dir.chdir(middleman_root_dir) do
+        output = `BUNDLE_GEMFILE="./Gemfile" middleman build --verbose`
+        if $?.exitstatus != 0
+          output =~ /\s+error\s*(.+?)\s*\r?\n(.+?)(for #<.+?>)?\r?\n/
+          file = $1
+          message = $2
+          raise BuildError.new(message, file)
+        end
+      end
     end
 
     def parse_file(path, app: new_middleman)
@@ -27,22 +43,15 @@ module SiteBuilder
       File.write(path, new_file_contents)
     end
 
-    private
-
-    def load_site_gemfile
-      gemfile = File.join(FirstSetup.instance.save_local_dir, 'Gemfile')
-      lockfile = gemfile + '.lock'
-      definition = Bundler::Definition.build(gemfile, lockfile, {})
-      runtime = Bundler::Runtime.new(FirstSetup.instance.save_local_dir, definition)
-      runtime.require
-      @gemfile_loaded = true
-    end
-
     def new_middleman(mode: :build)
-      ENV['MM_ROOT'] ||= FirstSetup.instance.save_local_dir
+      ENV['MM_ROOT'] ||= middleman_root_dir
       Middleman::Application.new do
         config[:mode] = mode
       end
+    end
+
+    def middleman_root_dir
+      FirstSetup.instance.save_local_dir
     end
   end
 end

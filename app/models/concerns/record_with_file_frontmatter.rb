@@ -17,7 +17,7 @@ module RecordWithFileFrontmatter
 
   def data
     @parsed_file_contents ||= SiteBuilder.parse_file(abs_path)
-    @data                 ||= @parsed_file_contents.data
+    @data                 ||= @parsed_file_contents.data || ''
   end
 
   def respond_to_missing?(method, *)
