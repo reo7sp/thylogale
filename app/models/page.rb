@@ -67,6 +67,7 @@ class Page < ApplicationRecord
       SiteBuilder.build
       Page.find_each(&:cleanup_assets)
       Page.update_all(published: true)
+      PageHistory.commit('Pages has been published')
     end
 
   end

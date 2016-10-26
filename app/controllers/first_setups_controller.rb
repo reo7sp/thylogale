@@ -11,6 +11,7 @@ class FirstSetupsController < ApplicationController
       create_admin_user
       create_site_root_folder
       import_site
+      init_git
     end
 
     redirect_to page_folders_path
@@ -104,5 +105,11 @@ class FirstSetupsController < ApplicationController
         f.extract(File.join(@first_setup.save_local_dir, f.name))
       end
     end
+  end
+
+  def init_git
+    git = Git.init(FirstSetup.instance.save_local_dir)
+    git.add(all: true)
+    git.commit('Initial commit')
   end
 end
