@@ -1,11 +1,13 @@
 class PagesController < ApplicationController
+  include ThylogaleUtils
+
   before_action :set_page, only: [:show, :preview, :raw, :update, :destroy]
 
   def show
   end
 
   def preview
-    # TODO
+    render plain: @page.built_data, content_type: get_mime_from_file_name(@page.build_path)
   end
 
   def raw
@@ -52,13 +54,5 @@ class PagesController < ApplicationController
 
   def page_params
     params.require(:page).permit(:title, :name, :template, :root_folder_id, :data)
-  end
-
-  def get_mime(extension)
-    Mime::Type.lookup_by_extension(extension)
-  end
-
-  def get_mime_from_file_name(file_name)
-    get_mime(File.extname_without_dot(file_name))
   end
 end

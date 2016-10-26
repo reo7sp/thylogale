@@ -1,5 +1,6 @@
 class PageAsset < ApplicationRecord
   include RecordWithFile
+  include RecordWithBuildableFile
   include ThylogaleUtils
 
   belongs_to :page, touch: true, counter_cache: true

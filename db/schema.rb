@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161006173445) do
+ActiveRecord::Schema.define(version: 20161025155119) do
 
   create_table "first_setups", force: :cascade do |t|
     t.boolean  "done",                  default: false
@@ -47,10 +47,11 @@ ActiveRecord::Schema.define(version: 20161006173445) do
     t.string   "title"
     t.string   "name"
     t.integer  "root_folder_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.string   "path"
     t.integer  "page_assets_count"
+    t.boolean  "published",         default: false
     t.index ["root_folder_id"], name: "index_pages_on_root_folder_id"
   end
 

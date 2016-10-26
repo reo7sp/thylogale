@@ -1,6 +1,7 @@
 class Page < ApplicationRecord
   include RecordWithFile
   include RecordWithFileFrontmatter
+  include RecordWithBuildableFile
   include PgSearch
   include ThylogaleUtils
 
@@ -14,6 +15,9 @@ class Page < ApplicationRecord
   before_data_save :cache_title_from_metadata, unless: :title_changed?
   before_save :update_title_in_metadata, if: :title_changed?, prepend: true
   before_data_save :download_external_images, if: :data_changed?
+
+  scope :published, -> { where(published: true) }
+  scope :edited, -> { where(published: false) }
 
   pg_search_scope :search_by_title, against: :title
 
@@ -62,6 +66,7 @@ class Page < ApplicationRecord
     def publish
       SiteBuilder.build
       Page.find_each(&:cleanup_assets)
+      Page.update_all(published: true)
     end
 
   end

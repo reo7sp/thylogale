@@ -26,6 +26,14 @@ class PageFolder < ApplicationRecord
     end
   end
 
+  def abs_build_path
+    if is_root?
+      File.join(FirstSetup.instance.save_local_dir, 'build')
+    else
+      File.join(FirstSetup.instance.save_local_dir, 'build', path)
+    end
+  end
+
   class << self
     def root
       first
