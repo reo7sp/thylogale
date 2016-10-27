@@ -55,7 +55,7 @@ class FirstSetupsController < ApplicationController
   end
 
   def create_site_root_folder
-    PageFolder.create!(id: 1, name: '/', title: t(:site), path: '/')
+    PageFolder.create!(id: 1, name: '/', title: t(:site), path: '')
   end
 
   def import_site

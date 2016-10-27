@@ -1,8 +1,14 @@
 module RecordWithBuildableFile
   extend ActiveSupport::Concern
 
+  # this concern assumes that you has already included RecordWithFile concern
+
   def root_build_path
     PageFolder.root.abs_build_path
+  end
+
+  def build_name
+    make_build_path(name)
   end
 
   def build_path

@@ -1,6 +1,8 @@
 class FirstSetup < ApplicationRecord
   validate on: :create do
-    errors.add(:only_one_instance, 'is allowed') if FirstSetup.count > 0
+    unless FirstSetup.count == 0
+      errors.add(:only_one_instance, 'is allowed')
+    end
   end
 
   validates_presence_of :site_domain, :email_choice, if: :done

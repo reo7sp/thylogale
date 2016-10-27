@@ -10,6 +10,11 @@ class Page < ApplicationRecord
 
   validates_presence_of :name, :title, :root_folder, :path
   validates_uniqueness_of :path
+  validate do
+    unless (root_folder.root? and not path.include?('/')) or File.dirname(path) == root_folder.path
+      errors.add(:page, 'does not belongs to root folder')
+    end
+  end
 
   before_validation :cache_title_from_metadata, unless: :title?
   before_data_save :cache_title_from_metadata, unless: :title_changed?
@@ -20,6 +25,17 @@ class Page < ApplicationRecord
   scope :edited, -> { where(published: false) }
 
   pg_search_scope :search_by_title, against: :title
+
+  def preview_data
+    SiteBuilder.preview_file(build_path)
+  end
+
+  def publish(commit: true)
+    SiteBuilder.build_one_file(build_path)
+    update!(published: true)
+    cleanup_assets
+    PageHistory.commit(commit.is_a?(String) ? commit : "Page '#{title}' has been published") if commit
+  end
 
   def cleanup_assets
     found_asset_ids = []
@@ -63,7 +79,7 @@ class Page < ApplicationRecord
 
   class << self
 
-    def publish
+    def publish_all
       SiteBuilder.build
       Page.find_each(&:cleanup_assets)
       Page.update_all(published: true)

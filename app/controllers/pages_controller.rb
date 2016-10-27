@@ -1,13 +1,13 @@
 class PagesController < ApplicationController
   include ThylogaleUtils
 
-  before_action :set_page, only: [:show, :preview, :raw, :update, :destroy]
+  before_action :set_page, only: [:show, :preview, :raw, :publish, :update, :destroy]
 
   def show
   end
 
   def preview
-    render plain: @page.built_data, content_type: get_mime_from_file_name(@page.build_path)
+    render plain: @page.preview_data, content_type: get_mime_from_file_name(@page.build_path)
   end
 
   def raw
@@ -15,7 +15,8 @@ class PagesController < ApplicationController
   end
 
   def publish
-    Page.publish
+    @page.publish
+    head :ok
   end
 
   def create

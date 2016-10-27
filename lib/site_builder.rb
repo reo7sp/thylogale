@@ -12,16 +12,31 @@ module SiteBuilder
   end
 
   class << self
-    def build
+    def build(options = {})
+      options_s = options.map { |k, v| "--#{k.to_s.dasherize} #{v}" }.join(' ')
       Dir.chdir(middleman_root_dir) do
-        output = `BUNDLE_GEMFILE="./Gemfile" middleman build --verbose`
+        output = `BUNDLE_GEMFILE="./Gemfile" middleman build --verbose #{options_s}`
         if $?.exitstatus != 0
           output =~ /\s+error\s*(.+?)\s*\r?\n(.+?)(for #<.+?>)?\r?\n/
-          file = $1
+          file    = $1
           message = $2
           raise BuildError.new(message, file)
         end
       end
+    end
+
+    def build_one_file(file, options = {})
+      build(options.merge(glob: file, no_clean: nil))
+    end
+
+    def preview_file(file)
+      preview_dir_name = '_thylogale_preview'
+      preview_dir_path = File.join(FirstSetup.instance.save_local_dir, preview_dir_name)
+      FileUtils.mkdir_p(preview_dir_path)
+      build(glob: file, build_dir: preview_dir_name)
+      File.binread(File.join(preview_dir_path, file))
+    ensure
+      FileUtils.rm_r(preview_dir_path)
     end
 
     def parse_file(path, app: new_middleman)
