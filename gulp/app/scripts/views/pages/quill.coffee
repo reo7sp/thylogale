@@ -6,6 +6,7 @@ pageHandlers = require './page_handlers.coffee'
 
 require './quill/formats/custom_class.coffee'
 require './quill/modules/autosave.coffee'
+require './quill/modules/publish.coffee'
 
 
 isPageView = ->
@@ -31,7 +32,7 @@ document.addEventListener 'turbolinks:load', ->
     quill = new Quill $editorEl[0],
       theme: 'snow'
       modules:
-        toolbar: [
+        toolbar: $('.ql-toolbar')[0] ? [
           ['bold', 'italic', 'underline', 'strike']
           [{'script': 'sub'}, {'script': 'super'}]
           [{'color': []}, {'background': []}]
@@ -46,6 +47,8 @@ document.addEventListener 'turbolinks:load', ->
         autosave:
           pageId: pageData.id
           pageHandler: pageHandler
+        publish:
+          pageId: pageData.id
 
     toolbarModule = quill.getModule('toolbar')
     $toolbar = $(toolbarModule.container)

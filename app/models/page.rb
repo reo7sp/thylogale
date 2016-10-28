@@ -26,11 +26,19 @@ class Page < ApplicationRecord
 
   pg_search_scope :search_by_title, against: :title
 
+  def edited
+    not published
+  end
+
   def preview_data
     SiteBuilder.preview_file(build_path)
   end
 
   def publish(commit: true)
+    if Page.edited.one?
+      Page.publish_all
+      return
+    end
     SiteBuilder.build_one_file(build_path)
     update!(published: true)
     cleanup_assets

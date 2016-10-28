@@ -19,13 +19,19 @@ class PagesController < ApplicationController
     head :ok
   end
 
+  def publish_all
+    Page.publish_all
+    head :ok
+  end
+
   def create
     @page = Page.new(page_params)
 
     @page.title.strip!
-    @page.root_folder       ||= PageFolder.find_by(id: params[:page_folder_id])
-    @page.name              ||= "#{@page.title.parameterize}.html.md.erb"
-    @page.path              = File.join(@page.root_folder.path, @page.name)
+    @page.root_folder ||= PageFolder.find_by(id: params[:page_folder_id])
+    @page.name        ||= "#{@page.title.parameterize}.html.md.erb"
+    @page.path        = File.join(@page.root_folder.path, @page.name)
+    @page.path        = @page.path[1..-1] if @page.path[0] == '/'
 
     if @page.save
       render json: {id: @page.id, path: page_path(@page)}, status: :created
@@ -35,7 +41,7 @@ class PagesController < ApplicationController
   end
 
   def update
-    if @page.update(page_params)
+    if @page.update({published: false}.merge(page_params))
       head :ok
     else
       render json: @page.errors, status: :unprocessable_entity

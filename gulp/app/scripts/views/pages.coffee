@@ -1,2 +1,2 @@
 require './pages/quill.coffee'
-require './pages/publish_button.coffee'
+require './pages/dropdown.coffee'

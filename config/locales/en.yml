@@ -84,3 +84,7 @@ en:
   will_autosave_soon: "Will save soon"
   search_pages_ellps: "Search pages..."
   not_found: "Not found"
+  publish_all_suffix: "All"
+  open_on_site: "Open on site"
+  publish_all: "Publish all"
+  publishing: "Publishing"

@@ -25,3 +25,6 @@ module.exports = class
 
   publish: ->
     ajax "#{@urlPath}/publish", method: 'POST'
+
+  @publishAll: ->
+    ajax "/pages/publish_all", method: 'POST'

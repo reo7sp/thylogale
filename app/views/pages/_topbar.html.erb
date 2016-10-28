@@ -17,15 +17,27 @@
       </button>
       <ul class="dropdown-menu">
         <li>
-          <%= link_to t(:preview), preview_page_path(@page) %>
+          <%= link_to t(:preview), preview_page_path(@page), target: '_blank' %>
         </li>
         <li>
-          <%= link_to t(:show_raw), raw_page_path(@page) %>
+          <%= link_to t(:open_on_site), site_page_path(@page), target: '_blank' %>
+        </li>
+        <li>
+          <%= link_to t(:show_raw), raw_page_path(@page), target: '_blank' %>
         </li>
       </ul>
     </div>
-    <button class="page-actions__item btn btn-success" id="publish-page-button" data-page="<%= @page.id %>">
-      <%= glyphicon 'share' %> <%=t :publish %>
+
+    <div class="page-actions__item btn-group" role="group" aria-label="...">
+      <button class="btn btn-success publish-button <%= 'publish-button__hidden' unless @page.edited %>" id="publish-page-button" data-page="<%= @page.id %>">
+        <%= glyphicon 'share' %> <%=t :publish %>
+      </button>
+      <button class="btn btn-success publish-button <%= 'publish-button__hidden' unless @page.edited and Page.edited.count >= 2 %>" id="publish-all-pages-suffix-button">
+        <%=t :publish_all_suffix %>
+      </button>
+    </div>
+    <button class="page-actions__item btn btn-success publish-button <%= 'publish-button__hidden' unless @page.published and Page.edited.any? %>" id="publish-all-pages-button">
+      <%= glyphicon 'share' %> <%=t :publish_all %>
     </button>
   </div>
 </div>

@@ -21,6 +21,8 @@ Rails.application.routes.draw do
     end
   end
 
+  post '/pages/publish_all', to: 'pages#publish_all'
+
   get '/page_assets/:page_id/:id', to: 'page_assets#show'
 
   get '/page_search', to: 'page_search#index'
