@@ -53,7 +53,7 @@ Quill.register 'modules/publish', class extends Quill.import('core/module')
         @savingModal.setTitle(I18n.t('publishing'))
         @publishAll()
           .progress (percent) =>
-            @savingModal.setProgress(percent)
+            @savingModal.setProgress(10 + percent * 0.9)
           .always =>
             @savingModal.setProgress(100)
             @savingModal.toggle(false)
