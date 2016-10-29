@@ -21,9 +21,9 @@
 
 #
 /node_modules/
-/public/assets/
 npm-debug.log
 browserify-cache.json
 rev-manifest.json
+/public/assets/
 /public/stylesheets/
 /public/javascripts/

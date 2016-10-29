@@ -44,7 +44,7 @@ Quill.register 'modules/autosave', class extends Quill.import('core/module')
   createSaveTimeout: ->
     @removeSaveTimeout()
     unless @skipNextSave
-      @updatePageStatus(I18n.t('will_autosave_soon'))
+      @updatePageStatus("<img src='/assets/images/loading.gif' style='height: 1em'>&nbsp; #{I18n.t('will_autosave_soon')}")
       @_showPublishButtons()
       @_createSaveTimeoutImpl()
     @skipNextSave = false
