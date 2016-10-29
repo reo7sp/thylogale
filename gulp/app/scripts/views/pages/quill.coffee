@@ -29,10 +29,12 @@ document.addEventListener 'turbolinks:load', ->
     html = pageHandler.handle(markdown)
     $editorEl.html(html)
 
+    $toolbarPremade = $('.ql-toolbar')[0]
+
     quill = new Quill $editorEl[0],
       theme: 'snow'
       modules:
-        toolbar: $('.ql-toolbar')[0] ? [
+        toolbar: $toolbarPremade ? [
           ['bold', 'italic', 'underline', 'strike']
           [{'script': 'sub'}, {'script': 'super'}]
           [{'color': []}, {'background': []}]
@@ -50,17 +52,18 @@ document.addEventListener 'turbolinks:load', ->
         publish:
           pageId: pageData.id
 
-    toolbarModule = quill.getModule('toolbar')
-    $toolbar = $(toolbarModule.container)
+    unless $toolbarPremade?
+      toolbarModule = quill.getModule('toolbar')
+      $toolbar = $(toolbarModule.container)
 
-    $toolbarErbButton = $ """
-        <span class="ql-formats">
-          <button type="button" class="ql-erb">
-            <span style="font-weight: 900; font-family: Verdana; font-size: 1.15rem; letter-spacing: -4px; line-height: 16px; margin-left: -6px; vertical-align: top">&lt;%</span>
-          </button>
-        </span>
-    """
-    $toolbarErbButton.click ->
-      quill.format('custom', 'erb')
-    $toolbarFontButton = $toolbar.find('.ql-font').parent()
-    $toolbarErbButton.insertBefore($toolbarFontButton)
+      $toolbarErbButton = $ """
+          <span class="ql-formats">
+            <button type="button" class="ql-erb">
+              <span style="font-weight: 900; font-family: Verdana; font-size: 1.15rem; letter-spacing: -4px; line-height: 16px; margin-left: -6px; vertical-align: top">&lt;%</span>
+            </button>
+          </span>
+      """
+      $toolbarErbButton.click ->
+        quill.format('custom', 'erb')
+      $toolbarFontButton = $toolbar.find('.ql-font').parent()
+      $toolbarErbButton.insertBefore($toolbarFontButton)

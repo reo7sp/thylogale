@@ -37,7 +37,7 @@
       </button>
     </div>
     <button class="page-actions__item btn btn-success publish-button <%= 'publish-button__hidden' unless @page.published and Page.edited.any? %>" id="publish-all-pages-button">
-      <%= glyphicon 'share' %> <%=t :publish_all %>
+      <%= glyphicon 'share' %> <%= glyphicon 'asterisk' %> <%=t :publish_all %>
     </button>
   </div>
 </div>
