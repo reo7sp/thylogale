@@ -34,6 +34,16 @@ class Page < ApplicationRecord
     SiteBuilder.preview_file(build_path)
   end
 
+  def preview_view_normalized_data
+    preview_data.gsub /((href|src)=['"]?|url *?\()(\/[^\/].+?)(['" >)])/ do |match|
+      url = $3
+      next match if url.start_with?('/page_assets')
+      left = $1
+      right = $4
+      "#{left}/pages/#{id}/preview#{url}#{right}"
+    end
+  end
+
   def publish(commit: true)
     if Page.edited.one?
       Page.publish_all

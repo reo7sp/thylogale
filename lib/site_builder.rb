@@ -30,13 +30,11 @@ module SiteBuilder
     end
 
     def preview_file(file)
-      preview_dir_name = '_thylogale_preview'
+      preview_dir_name = File.join('.thylogale', 'preview')
       preview_dir_path = File.join(FirstSetup.instance.save_local_dir, preview_dir_name)
       FileUtils.mkdir_p(preview_dir_path)
-      build(glob: file, build_dir: preview_dir_name)
+      build(build_dir: preview_dir_name)
       File.binread(File.join(preview_dir_path, file))
-    ensure
-      FileUtils.rm_r(preview_dir_path)
     end
 
     def parse_file(path, app: new_middleman)

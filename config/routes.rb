@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   end
 
   post '/pages/publish_all', to: 'pages#publish_all'
+  get '/pages/:id/preview/*asset_path', to: 'pages#preview_asset'
 
   get '/page_assets/:page_id/:id', to: 'page_assets#show'
 

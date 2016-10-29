@@ -7,7 +7,7 @@
 
   &__back-btn
     margin-left: 16px
-    color: #ddd
+    color: #bbb
     text-decoration: none
 
     &:hover
@@ -29,12 +29,15 @@
     display: inline-block
 
 .page-status
+  transition: font-size 0.5s ease, color 0.25s
+
   &__ok
-    color: #00aa00
+    color: #0a0
+    font-size: large
 
   &__error
-    color: #dd0000
-    font-size: larger
+    color: #d00
+    font-size: x-large
 
 .page-editor > .ql-editor > *
   margin-bottom: 1rem
@@ -47,6 +50,7 @@
   &::before
     content: '<%'
     color: red !important
+
   &::after
     content: '%>'
     color: red !important

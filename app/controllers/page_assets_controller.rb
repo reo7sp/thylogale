@@ -7,7 +7,7 @@ class PageAssetsController < ApplicationController
     respond_to do |format|
       format.json
       format.all do
-        render plain: @page_asset.data, content_type: get_mime_from_file_name(@page_asset.name)
+        send_file @page_asset.abs_path
       end
     end
   end

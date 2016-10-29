@@ -1,17 +1,24 @@
 class PagesController < ApplicationController
   include ThylogaleUtils
 
-  before_action :set_page, only: [:show, :preview, :raw, :publish, :update, :destroy]
+  before_action :set_page, only: [:show, :preview, :preview_asset, :raw, :publish, :update, :destroy]
+  protect_from_forgery except: :preview_asset
 
   def show
   end
 
   def preview
-    render plain: @page.preview_data, content_type: get_mime_from_file_name(@page.build_path)
+    render body: @page.preview_view_normalized_data, content_type: get_mime_from_file_name(@page.build_name)
+  end
+
+  def preview_asset
+    asset_path = "#{params[:asset_path]}.#{params[:format]}"
+    asset_abs_path = File.join(FirstSetup.instance.save_local_dir, '.thylogale', 'preview', asset_path)
+    send_file asset_abs_path
   end
 
   def raw
-    render plain: @page.data, content_type: get_mime_from_file_name(@page.name)
+    send_file @page.abs_path, type: 'text/plain', disposition: 'inline'
   end
 
   def publish

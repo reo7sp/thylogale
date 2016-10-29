@@ -1,0 +1,17 @@
+<% if Page.edited.any? %>
+    <div class="page-folders-publish-queue">
+      <div class="page-folders-publish-queue__icon">
+        <%= glyphicon 'share' %>
+      </div>
+      <div class="page-folders-publish-queue__message">
+        <%=t :publish_queue, count: Page.edited.count %>
+      </div>
+      <ul class="page-folders-publish-queue__list">
+        <% Page.edited.find_each do |page| %>
+            <li class="page-folders-publish-queue__list-item">
+              <%= link_to page.title, page_path(page) %>
+            </li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>

@@ -25,12 +25,21 @@ Quill.register 'modules/autosave', class extends Quill.import('core/module')
 
     @quill.on(Quill.events.TEXT_CHANGE, @onTextChange.bind(@))
     $(document).on('click', '.ql-toolbar', @onFormatClick.bind(@))
+    window.onbeforeunload = @onEditorClose.bind(@)
+    document.addEventListener('turbolinks:before-visit', @onEditorClose.bind(@))
 
   onTextChange: ->
     @createSaveTimeout()
 
   onFormatClick: ->
     @createSaveTimeout() if @saveTimeout?
+
+  onEditorClose: (e) ->
+    if @willSaveSoon()
+      if e?
+        e.preventDefault()
+        alert(I18n.t('will_autosave_soon'))
+      return I18n.t('will_autosave_soon')
 
   createSaveTimeout: ->
     @removeSaveTimeout()
@@ -94,13 +103,13 @@ Quill.register 'modules/autosave', class extends Quill.import('core/module')
       setTimeout(f, 0)
 
     @quill.disable()
-    @savingModal.setProgress(0)
+    @savingModal.setProgress(10)
     @savingModal.toggle(true)
 
     @page.update(data: @pageHandler.revert(@quill.root.innerHTML))
       .progress (percent) =>
-        @savingModal.setProgress(percent * 0.75)
-        promise.notify(percent * 0.75)
+        @savingModal.setProgress(10 + percent * 0.65)
+        promise.notify(10 + percent * 0.65)
       .fail =>
         doAfterMinTime(sayFail)
       .done =>

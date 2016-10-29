@@ -88,3 +88,6 @@ en:
   open_on_site: "Open on site"
   publish_all: "Publish all"
   publishing: "Publishing"
+  publish_queue:
+    one: "%{count} page isn't published:"
+    other: "%{count} pages aren't published:"

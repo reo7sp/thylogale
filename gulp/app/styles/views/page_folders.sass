@@ -7,7 +7,7 @@
 
   &__back-btn
     margin-left: 16px
-    color: #ddd
+    color: #bbb
     text-decoration: none
 
     &:hover
@@ -25,6 +25,31 @@
   &__separator
     display: inline-block
     width: 8px
+
+.page-folders-publish-queue
+  position: relative
+  font-size: larger
+  margin-bottom: 0.5em
+
+  &__icon
+    display: inline
+    margin-left: 10px
+
+  &__message
+    display: inline
+    margin-left: 22px
+
+  &__list
+    display: inline
+    list-style: none
+    margin-left: 0.5em
+    padding: 0
+    li + li:before
+      content: ", "
+
+  &__list-item
+    display: inline
+    margin-left: -4px
 
 .page-folders-list
   font-size: larger
@@ -48,7 +73,7 @@
         opacity: 1
 
   &__icon
-    width: 32px
+    width: 46px
 
     &_folder
       color: #fccf17
