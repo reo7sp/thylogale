@@ -1,6 +1,4 @@
 class PageFolder < ApplicationRecord
-  include PgSearch
-
   has_many :pages, foreign_key: 'root_folder_id', dependent: :destroy
   has_many :subfolders, class_name: 'PageFolder', foreign_key: 'root_folder_id', dependent: :destroy
   belongs_to :root_folder, class_name: 'PageFolder', touch: true, counter_cache: 'subfolders_count'
@@ -16,8 +14,6 @@ class PageFolder < ApplicationRecord
       errors.add(:page, 'does not belongs to root folder')
     end
   end
-
-  pg_search_scope :search_by_title, against: :title
 
   def root?
     id == 1

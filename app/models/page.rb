@@ -2,7 +2,6 @@ class Page < ApplicationRecord
   include RecordWithFile
   include RecordWithFileFrontmatter
   include RecordWithBuildableFile
-  include PgSearch
   include ThylogaleUtils
 
   belongs_to :root_folder, class_name: 'PageFolder', touch: true, counter_cache: true
@@ -23,8 +22,6 @@ class Page < ApplicationRecord
 
   scope :published, -> { where(published: true) }
   scope :edited, -> { where(published: false) }
-
-  pg_search_scope :search_by_title, against: :title
 
   def edited
     not published

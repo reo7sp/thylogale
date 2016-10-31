@@ -7,6 +7,11 @@
     <% data_turbolinks_track = Rails.env.development? ? 'reload' : false %>
     <%= stylesheet_link_tag 'app', media: 'all', 'data-turbolinks-track' => data_turbolinks_track %>
 
+    <%= javascript_include_tag 'app',
+                               'data-turbolinks-track' => data_turbolinks_track %>
+    <%= javascript_include_tag 'translations',
+                               'data-turbolinks-track' => data_turbolinks_track %>
+
     <%= csrf_meta_tags %>
   </head>
 
@@ -16,10 +21,5 @@
     <% end %>
 
     <%= yield %>
-
-    <%= javascript_include_tag 'app',
-                               'data-turbolinks-track' => data_turbolinks_track %>
-    <%= javascript_include_tag 'translations',
-                               'data-turbolinks-track' => data_turbolinks_track %>
   </body>
 </html>

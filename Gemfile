@@ -13,10 +13,8 @@ gem 'rubyzip'
 gem 'middleman-core', github: 'middleman/middleman'
 gem 'pandoc-ruby'
 gem 'git'
-
 gem 'rs_russian', github: 'rs-pro/russian'
-gem 'pg_search'
-
+gem 'ransack'
 gem 'i18n-js', '>= 3.0.0.rc11'
 
 group :development, :test do
