@@ -39,12 +39,65 @@
     color: #d00
     font-size: x-large
 
-.page-editor > .ql-editor > *
-  margin-bottom: 1rem
-
 .publish-button
   &__hidden
     display: none
+
+.page-ql-page-search-tooltip
+  position: absolute
+  font-family: Helvetica, Arial, sans-serif
+  font-size: 13px
+  color: #444
+  margin-top: 10px
+  line-height: 26px
+  padding: 5px 12px
+  white-space: nowrap
+  background-color: #fff
+  border: 1px solid #ccc
+  box-shadow: 0 0 5px #ddd
+
+  input
+    border: 1px solid #ccc
+    font-size: 13px
+    height: 26px
+    margin: 0
+    padding: 3px 5px
+    width: 170px
+
+  &__text
+    margin-right: 5px
+
+  &__btn
+    margin-left: 11px
+    color: #06c
+    cursor: pointer
+    text-decoration: none
+
+    &:hover
+      text-decoration: none
+
+  &__separator
+    margin: 8px 0
+
+    &_hidden
+      display: none
+
+  &__list
+    list-style: none
+    padding-left: 0
+    margin-bottom: 0
+
+  &__list-item-btn
+    text-align: right
+    float: right
+    cursor: pointer
+    text-decoration: none
+
+    &:hover
+      text-decoration: none
+
+.page-editor > .ql-editor > *
+  margin-bottom: 1rem
 
 .ql-custom-erb
   &::before

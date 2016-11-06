@@ -91,3 +91,9 @@ en:
   publish_queue:
     one: "%{count} page isn't published:"
     other: "%{count} pages aren't published:"
+  enter_page_title: "Enter page title:"
+  search: "Search"
+  close: "Close"
+  searching: "Searching..."
+  use: "Use"
+  search_error: "Search error"

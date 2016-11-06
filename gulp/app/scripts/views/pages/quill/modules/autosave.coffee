@@ -32,7 +32,7 @@ Quill.register 'modules/autosave', class extends Quill.import('core/module')
     @createSaveTimeout()
 
   onFormatClick: ->
-    @createSaveTimeout() if @saveTimeout?
+    @createSaveTimeout() if @willSaveSoon()
 
   onEditorClose: (e) ->
     if @willSaveSoon()
@@ -62,7 +62,7 @@ Quill.register 'modules/autosave', class extends Quill.import('core/module')
     @saveTimeout = null
 
   willSaveSoon: ->
-    @saveTimeout?
+    @saveTimeout? and not @skipNextSave
 
   skipSave: (b = true) ->
     @skipNextSave = b

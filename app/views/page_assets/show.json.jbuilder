@@ -1,1 +1,1 @@
-json.extract! @page_asset, :id, :name, :page_id, :created_at, :updated_at
+json.partial! 'page_assets/page_asset', page_asset: @page_asset

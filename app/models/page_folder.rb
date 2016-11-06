@@ -19,6 +19,10 @@ class PageFolder < ApplicationRecord
     id == 1
   end
 
+  def build_path
+    path
+  end
+
   def abs_path
     if root?
       File.join(FirstSetup.instance.save_local_dir, 'source')
@@ -31,7 +35,7 @@ class PageFolder < ApplicationRecord
     if root?
       File.join(FirstSetup.instance.save_local_dir, 'build')
     else
-      File.join(FirstSetup.instance.save_local_dir, 'build', path)
+      File.join(FirstSetup.instance.save_local_dir, 'build', build_path)
     end
   end
 

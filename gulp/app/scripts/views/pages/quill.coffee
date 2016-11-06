@@ -8,6 +8,9 @@ require './quill/formats/custom_class.coffee'
 require './quill/modules/autosave.coffee'
 require './quill/modules/publish.coffee'
 
+erbButtonMaker = require './quill/buttons/erb.coffee'
+pageButtonMaker = require './quill/buttons/page.coffee'
+
 
 isPageView = ->
   $(document.body).data('controller') == 'pages'
@@ -18,52 +21,50 @@ getPageHandler = (pageName) ->
     pageName.endsWith(fileExt)
 
 
+loadData = ($editorEl, pageHandler) ->
+  $content = $($editorEl.data('content-in'))
+  markdown = _.unescape($content.text())
+  html = pageHandler.handle(markdown)
+  $editorEl.html(html)
+
+addCustomButtonsToToolbar = (quill, $toolbar) ->
+  for buttonMaker in [erbButtonMaker, pageButtonMaker]
+    buttonMaker(quill, $toolbar)
+  return
+
+
 document.addEventListener 'turbolinks:load', ->
-  if isPageView()
-    $editorEl = $('#page-editor')
-    pageData = $editorEl.data('page')
-    pageHandler = getPageHandler(pageData.name)
+  return unless isPageView()
 
-    $content = $($editorEl.data('content-in'))
-    markdown = _.unescape($content.text())
-    html = pageHandler.handle(markdown)
-    $editorEl.html(html)
+  $editorEl = $('#page-editor')
+  $toolbarPremade = $('.ql-toolbar')[0]
+  pageData = $editorEl.data('page')
+  pageHandler = getPageHandler(pageData.name)
 
-    $toolbarPremade = $('.ql-toolbar')[0]
+  loadData($editorEl, pageHandler)
 
-    quill = new Quill $editorEl[0],
-      theme: 'snow'
-      modules:
-        toolbar: $toolbarPremade ? [
-          ['bold', 'italic', 'underline', 'strike']
-          [{'script': 'sub'}, {'script': 'super'}]
-          [{'color': []}, {'background': []}]
-          [{'header': [1, 2, 3, 4, 5, 6, false]}]
-          [{'align': []}]
-          [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}]
-          ['link', 'image', 'blockquote', 'code-block']
-          [{'font': []}]
-          [{'size': ['small', false, 'large', 'huge']}]
-          ['clean']
-        ]
-        autosave:
-          pageId: pageData.id
-          pageHandler: pageHandler
-        publish:
-          pageId: pageData.id
+  quill = new Quill $editorEl[0],
+    theme: 'snow'
+    modules:
+      toolbar: $toolbarPremade ? [
+        ['bold', 'italic', 'underline', 'strike']
+        [{'script': 'sub'}, {'script': 'super'}]
+        [{'color': []}, {'background': []}]
+        [{'header': [1, 2, 3, 4, 5, 6, false]}]
+        [{'align': []}]
+        [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}]
+        ['image', 'link', 'blockquote', 'code-block']
+        [{'font': []}]
+        [{'size': ['small', false, 'large', 'huge']}]
+        ['clean']
+      ]
+      autosave:
+        pageId: pageData.id
+        pageHandler: pageHandler
+      publish:
+        pageId: pageData.id
 
-    unless $toolbarPremade?
-      toolbarModule = quill.getModule('toolbar')
-      $toolbar = $(toolbarModule.container)
-
-      $toolbarErbButton = $ """
-          <span class="ql-formats">
-            <button type="button" class="ql-erb">
-              <span style="font-weight: 900; font-family: Verdana; font-size: 1.15rem; letter-spacing: -4px; line-height: 16px; margin-left: -6px; vertical-align: top">&lt;%</span>
-            </button>
-          </span>
-      """
-      $toolbarErbButton.click ->
-        quill.format('custom', 'erb')
-      $toolbarFontButton = $toolbar.find('.ql-font').parent()
-      $toolbarErbButton.insertBefore($toolbarFontButton)
+  unless $toolbarPremade?
+    toolbarModule = quill.getModule('toolbar')
+    $toolbar = $(toolbarModule.container)
+    addCustomButtonsToToolbar(quill, $toolbar)
