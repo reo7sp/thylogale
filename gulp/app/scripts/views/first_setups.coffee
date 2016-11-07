@@ -54,18 +54,18 @@ init = ->
   for ids in [importChoicesIds, saveChoicesIds, emailChoicesIds]
     for id in ids
       do (id, ids) ->
-        $(id).on 'change', (e) ->
-          for id2 in ids 
-            $("#{id2}_details").toggleClass('hidden', id2 == id)
+        $(id).on 'change', ->
+          for id2 in ids
+            $("#{id2}_details").toggleClass('hidden', id2 != id)
           checkForm()
 
   for id in controlsIds
-    $(id).on 'input change', (e) ->
-      checkForm()
+    $(id).on('input change', checkForm)
 
   return
   
 isSetup = -> $(document.body).data('controller') == 'first_setups'
 
-  
-init() if isSetup
+
+$ ->
+  init() if isSetup

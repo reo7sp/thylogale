@@ -7,7 +7,6 @@ class PageFolder < ApplicationRecord
   validates_format_of :name, with: /\A^[^\s~#%&*{}\\:<>?\/+|"]+\z/, unless: :root?
 
   validates_presence_of :root_folder, unless: :root?
-  validates_presence_of :path
   validates_uniqueness_of :path
   validate do
     unless (root? and path == '') or (root_folder.root? and not path.include?('/') == 1) or File.dirname(path) == root_folder.path
