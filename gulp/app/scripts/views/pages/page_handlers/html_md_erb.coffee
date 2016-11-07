@@ -8,17 +8,18 @@ module.exports = class
 
   markedOptions:
     gfm: true
+    tables: true
 
   toMarkdownOptions:
     gfm: true
     converters: [
       {
-        filter: 's'
-        replacement: (content) -> "<s>#{content}</s>"
-      }
-      {
         filter: (node) -> node.classList.contains('ql-custom-erb')
         replacement: (content) -> "<%#{content}%>"
+      }
+      {
+        filter: 's'
+        replacement: (content) -> "<s>#{content}</s>"
       }
       {
         filter: (node) -> node.classList.length > 0 or node.style.length > 0

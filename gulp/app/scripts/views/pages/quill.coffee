@@ -5,11 +5,14 @@ Quill = require 'quill'
 pageHandlers = require './page_handlers.coffee'
 
 require './quill/formats/custom_class.coffee'
+require './quill/formats/table.coffee'
+
 require './quill/modules/autosave.coffee'
 require './quill/modules/publish.coffee'
 
 erbButtonMaker = require './quill/buttons/erb.coffee'
 pageButtonMaker = require './quill/buttons/page.coffee'
+tableButtonMaker = require './quill/buttons/table.coffee'
 
 
 isPageView = ->
@@ -28,7 +31,7 @@ loadData = ($editorEl, pageHandler) ->
   $editorEl.html(html)
 
 addCustomButtonsToToolbar = (quill, $toolbar) ->
-  for buttonMaker in [erbButtonMaker, pageButtonMaker]
+  for buttonMaker in [erbButtonMaker, pageButtonMaker, tableButtonMaker]
     buttonMaker(quill, $toolbar)
   return
 

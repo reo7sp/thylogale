@@ -79,6 +79,13 @@ Quill.register 'modules/autosave', class extends Quill.import('core/module')
     @removeSaveTimeout()
     @_savePage()
 
+  getEditorContents: ->
+    @quill.root.innerHTML
+      .replace /<tr class="ql-table-controls">.+?<\/tr>/g, ''
+
+  getEditorData: ->
+    @pageHandler.revert(@getEditorContents())
+
   _savePage: ->
     promise = $.Deferred()
     startTime = Date.now()
@@ -106,7 +113,7 @@ Quill.register 'modules/autosave', class extends Quill.import('core/module')
     @savingModal.setProgress(10)
     @savingModal.toggle(true)
 
-    @page.update(data: @pageHandler.revert(@quill.root.innerHTML))
+    @page.update(data: @getEditorData())
       .progress (percent) =>
         @savingModal.setProgress(10 + percent * 0.65)
         promise.notify(10 + percent * 0.65)

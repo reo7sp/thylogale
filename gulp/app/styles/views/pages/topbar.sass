@@ -1,0 +1,125 @@
+.page-topbar
+  margin-bottom: 1em
+
+  &__title
+    display: inline-block
+    margin: 0
+
+  &__back-btn
+    margin-left: 16px
+    color: #bbb
+    text-decoration: none
+
+    &:hover
+      text-decoration: none
+
+  &__status
+    display: inline
+    margin-right: 18px
+    line-height: 30px
+    vertical-align: text-top
+
+  &__actions
+    display: inline-block
+    float: right
+    line-height: 38px
+
+
+.page-actions
+  &__item
+    display: inline-block
+
+
+.page-status
+  transition: font-size 0.5s ease, color 0.25s
+
+  &__ok
+    color: #0a0
+    font-size: large
+
+  &__error
+    color: #d00
+    font-size: x-large
+
+
+.publish-button
+  &__hidden
+    display: none
+
+
+.page-ql-page-search-tooltip
+  position: absolute
+  font-family: Helvetica, Arial, sans-serif
+  font-size: 13px
+  color: #444
+  margin-top: 10px
+  line-height: 26px
+  padding: 5px 12px
+  white-space: nowrap
+  background-color: #fff
+  border: 1px solid #ccc
+  box-shadow: 0 0 5px #ddd
+
+  input
+    border: 1px solid #ccc
+    font-size: 13px
+    height: 26px
+    margin: 0
+    padding: 3px 5px
+    width: 170px
+
+  &__text
+    margin-right: 5px
+
+  &__btn
+    margin-left: 11px
+    color: #06c
+    cursor: pointer
+    text-decoration: none
+
+    &:hover
+      text-decoration: none
+
+  &__separator
+    margin: 8px 0
+
+    &_hidden
+      display: none
+
+  &__list
+    list-style: none
+    padding-left: 0
+    margin-bottom: 0
+
+  &__list-item-btn
+    text-align: right
+    float: right
+    cursor: pointer
+    text-decoration: none
+
+    &:hover
+      text-decoration: none
+
+
+.ql-custom-erb
+  &::before
+    content: '<%'
+    color: red !important
+
+  &::after
+    content: '%>'
+    color: red !important
+
+  border: 2px dotted #f77
+  padding: 2px 10px
+  margin: 0 2px
+  color: gray !important
+  background-color: white !important
+  font-family: monospace !important
+  font-size: medium !important
+  font-style: normal !important
+  font-variant: normal !important
+  font-weight: normal !important
+  text-decoration: none !important
+
+
